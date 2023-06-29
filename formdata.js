@@ -53,7 +53,7 @@ app.post('/', (req, res) => {
   // console.log(req)
 
   // Respond with a success message
-  res.redirect('https://rollcallsolutions.com/'); 
+  res.redirect('https://peteredwinsmith.github.io/ecm/bcm_demo_admin_console.html'); 
   // res.redirect('back'); 
   // res.send('Form data received successfully');
 });
