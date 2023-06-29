@@ -53,6 +53,7 @@ app.post('/', (req, res) => {
   // console.log(req)
 
   // Respond with a success message
+  req.flash('message', 'You are successfully logged in!');
   res.redirect('https://peteredwinsmith.github.io/ecm/bcm_demo_admin_console.html'); 
   // res.redirect('back'); 
   // res.send('Form data received successfully');
