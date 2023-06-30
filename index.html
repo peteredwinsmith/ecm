@@ -63,21 +63,13 @@
 
 <br></br>
 
-<div class="grid grid-cols-3 gap-4" id="loginAlert">
-<div class="invisible ...">Login Successful!</div>
-</div>
-
 <script>
-    $('#loginAlert').hide();
-    const urlParams = new URLSearchParams(window.location.search);
-    const myParam = urlParams.get('e');
-    <p>myParam</p>
-    // if(myParam == "Login Successful!") {
-    //    $('#loginAlert').show();
-    }
+	const queryString = window.location.search;
+	console.log(queryString);
+	const urlParams = new URLSearchParams(queryString);
+	const error = urlParams.get('e')
+	console.log(error);
 </script>
-
-// <p id="message" style="display:none">Login Successful!</p>
 
 <button type="button" onclick="myFunction()">Click!</button>
 
