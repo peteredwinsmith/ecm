@@ -40,6 +40,22 @@
 
 	<h2>Main Content</h2>
 
+	<br></br>
+
+	<div class="grid grid-cols-3 gap-4" id="loginAlert">
+	<div class="invisible ...">Login Successful!</div>
+	</div>
+
+	<script>
+    		$('#loginAlert').hide();
+    		const urlParams = new URLSearchParams(window.location.search);
+    		const myParam = urlParams.get('e');
+    		<p>myParam</p>
+    		// if(myParam == "Login Successful!") {
+    		//    $('#loginAlert').show();
+    		}
+	</script>
+
 	<div class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
   	<span class="font-medium">Info alert!</span> Change a few things up and try submitting again.
 	</div>

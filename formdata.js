@@ -41,22 +41,24 @@ const express = require('express');
 var bodyParser = require('body-parser');
 const app = express();
 
-app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: false }));
+
+// app.use(bodyParser.json());
 
 app.post('/', (req, res) => {
   // Get the form data from the request
   const formData = req.body;
 
   // Print the form data to the console
-  console.log(JSON.stringify(formData));
-  console.log(JSON.stringify(req.headers));
+  console.log(formData);
+  console.log(req.headers);
   // console.log(req)
 
   // Respond with a success message
-  req.flash('message', 'You are successfully logged in!');
-  res.redirect('https://peteredwinsmith.github.io/ecm/bcm_demo_admin_console.html'); 
-  // res.redirect('back'); 
+  // req.flash('message', 'You are successfully logged in!');
   // res.send('Form data received successfully');
-});
+  res.redirect('https://peteredwinsmith.github.io/ecm/bcm_demo_admin_console.html?e='  + encodeURIComponent('Login Successful!')); 
+  // res.redirect('back'); 
+  });
 
 app.listen(3000);
