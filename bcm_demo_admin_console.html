@@ -42,12 +42,15 @@
 
 	<br></br>
 
+	<p id="errmsg">Default message</p>
+
 	<script>
 		const queryString = window.location.search;
-		console.log(queryString);
+		// console.log(queryString);
 		const urlParams = new URLSearchParams(queryString);
 		const error = urlParams.get('e')
-		console.log(error);
+		document.getElementById("errmsg").innerHTML = error
+		// console.log(error);
 	</script>
 
 	<div class="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
