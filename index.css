@@ -1,0 +1,118 @@
+/* bcm_demo.css */
+
+<style>
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+/* Style the header */
+.header {
+  background-color: #00214d;
+  color: #FFFFFF;
+  padding: 16px;
+  text-align: center;
+}
+
+/* Style the top navigation bar */
+.topnav {
+  overflow: hidden;
+  background-color: #3B7CFF;
+}
+
+/* Style the topnav links */
+/* Padding - first variable is the height */
+.topnav a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 20px 30px;
+  text-decoration: none;
+}
+
+/* Change color on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Two unequal columns that floats next to each other */
+.column {
+  float: left;
+  padding: 10px;
+}
+
+/* Left column */
+.column.side {
+  width: 20%;
+}
+
+/* Right column */
+.column.right {
+  width: 80%;
+}
+
+/* Clear floats after the columns */
+.row::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .column.side, .column.right {
+    width: 100%;
+  }
+}
+
+/* Style the footer */
+.footer {
+  background-color: #f1f1f1;
+  padding: 10px;
+  text-align: center;
+}
+
+/* Rounded */
+.rounded {
+    border-radius: 15px;
+}
+
+/* Float image right aligned */
+.hp  {
+float: right;    
+ margin: 0 0 0 15px;
+}
+
+/* List style for side menu */
+ul {
+  list-style-type: none;
+  margin: 30px;
+  padding: 0;
+}
+
+li a {
+  display: block;
+  width: 200px;
+}
+
+table {
+  width: 70%;
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1px solid black;
+  padding: 5px;
+}
+
+</style>
