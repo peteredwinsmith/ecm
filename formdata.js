@@ -49,7 +49,7 @@ app.post('/', (req, res) => {
   // Get the form data from the request
   const formData = req.body;
   const username = req.body.username;
-  const password = req.body.password;
+  const password = req.body.pswd;
   const email = req.body.email;
 
   // Print the form data to the console
@@ -63,7 +63,7 @@ app.post('/', (req, res) => {
     res.redirect('https://peteredwinsmith.github.io/ecm/index.html?cde='  + encodeURIComponent('Username must be input')); 
   } else {
     // Redirect to the login page and respond with a success message
-    res.redirect('https://peteredwinsmith.github.io/ecm/bcm_demo_admin_console.html?e='  + encodeURIComponent('Login Successful!')); 
+    res.redirect('https://peteredwinsmith.github.io/ecm/bcm_demo_admin_console.html?cde='  + encodeURIComponent('Login Successful!')); 
   }
 
   // Retrieve data from the Customer table and display
