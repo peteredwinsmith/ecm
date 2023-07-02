@@ -39,6 +39,18 @@
 
 <p style="padding: 0 0 1em 0;" class="text-2xl font-bold">Login</p>
 
+<p style="padding: 0 0 1em 0;" class="text-2xl font-bold" id="errmsg">Default message</p>
+
+<script>
+	const queryString = window.location.search;
+	console.log(queryString);
+	const urlParams = new URLSearchParams(queryString);
+	const error = urlParams.get('cde')
+	console.log(error);
+	document.getElementById("errmsg").innerHTML = error
+	console.log(document.getElementById("errmsg").innerHTML);
+</script>
+
 <form action="http://localhost:3000" method="POST" enctype="application/x-www-form-urlencoded">
 <div class="mb-6">
 <label for="username" size=30 class="block mb-2 text-medium font-medium font-bold text-gray-900 dark:text-white">Your Username</label>
@@ -63,32 +75,9 @@
 
 <br></br>
 
-<p id="errmsg">Default message</p>
 
-<script>
-	const queryString = window.location.search;
-	console.log(queryString);
-	const urlParams = new URLSearchParams(queryString);
-	const error = urlParams.get('cde')
-	console.log(error);
-	document.getElementById("errmsg").innerHTML = error
-	console.log(document.getElementById("errmsg").innerHTML);
-</script>
-
-<button type="button" onclick="myFunction()">Click!</button>
 
 <br></br>
-
-<p id="multi"></p>
-
-<script>
-function multiply(a, b) {
-// Function returns the product of a and b
-  return a * b;
-}
-let x = multiply(4,3);
-document.getElementById("multi").innerHTML = x;
-</script>
 
 <script src="BCMScript.js"></script>
 
