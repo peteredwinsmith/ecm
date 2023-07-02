@@ -4,7 +4,7 @@
 <title>RC BCM Demo</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="index.css" rel="stylesheet">
+<link href="login.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" rel="stylesheet">
 </head>
 <body>
@@ -47,7 +47,7 @@
 		const queryString = window.location.search;
 		console.log(queryString);
 		const urlParams = new URLSearchParams(queryString);
-		const error = urlParams.get('e')
+		const error = urlParams.get('cde')
 		console.log(error);
 		document.getElementById("errmsg").innerHTML = error
 	</script>

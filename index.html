@@ -4,7 +4,7 @@
 <title>RC BCM Demo</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link href="bcm_demo_css.css" rel="stylesheet">
+<link href="login.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" rel="stylesheet">
 </head>
 <body>
@@ -42,15 +42,15 @@
 <form action="http://localhost:3000" method="POST" enctype="application/x-www-form-urlencoded">
 <div class="mb-6">
 <label for="username" size=30 class="block mb-2 text-medium font-medium font-bold text-gray-900 dark:text-white">Your Username</label>
-<input type="text" id="username" name="username" class="input-content-offset-10 ps-1 bg-gray-50 border border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-90 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="jdoe" required>
+<input type="text" id="username" name="username" class="input-content-offset-10 ps-1 bg-gray-50 border border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-90 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="jdoe">
 </div>
 <div class="mb-6">
 <label for="pswd" size=20 class="block mb-2 text-medium font-medium font-bold text-gray-900 dark:text-white">Your Password</label>
-<input type="password" id="pswd" name="pswd" class="input-content-offset-10 ps-1 bg-gray-50 border border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-90 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="password" required>
+<input type="password" id="pswd" name="pswd" class="input-content-offset-10 ps-1 bg-gray-50 border border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-90 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="password">
 </div>
 <div class="mb-6">
 <label for="email" size=30 class="block mb-2 text-medium font-medium font-bold text-gray-900 dark:text-white">Your Email</label>
-<input type="email" id="email" name="email" class="input-content-offset-10 ps-1 bg-gray-50 border border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-90 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="jdoe@acme.com" required>
+<input type="email" id="email" name="email" class="input-content-offset-10 ps-1 bg-gray-50 border border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-90 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="jdoe@acme.com">
 </div>
 <div class="flex items-start mb-6">
 <div class="flex items-center h-5">
@@ -69,7 +69,7 @@
 	const queryString = window.location.search;
 	console.log(queryString);
 	const urlParams = new URLSearchParams(queryString);
-	const error = urlParams.get('e')
+	const error = urlParams.get('cde')
 	console.log(error);
 	document.getElementById("errmsg").innerHTML = error
 	console.log(document.getElementById("errmsg").innerHTML);

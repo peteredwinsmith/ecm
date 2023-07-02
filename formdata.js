@@ -48,17 +48,36 @@ app.use(express.urlencoded({ extended: false }));
 app.post('/', (req, res) => {
   // Get the form data from the request
   const formData = req.body;
+  const username = req.body.username;
+  const password = req.body.password;
+  const email = req.body.email;
 
   // Print the form data to the console
   console.log(formData);
+  console.log(username)
   console.log(req.headers);
   // console.log(req)
 
-  // Respond with a success message
-  // req.flash('message', 'You are successfully logged in!');
-  // res.send('Form data received successfully');
-  res.redirect('https://peteredwinsmith.github.io/ecm/bcm_demo_admin_console.html?e='  + encodeURIComponent('Login Successful!')); 
-  // res.redirect('back'); 
+  if (username == "") {
+    // Return error if username field is empty
+    res.redirect('https://peteredwinsmith.github.io/ecm/index.html?cde='  + encodeURIComponent('Username must be input')); 
+  } else {
+    // Redirect to the login page and respond with a success message
+    res.redirect('https://peteredwinsmith.github.io/ecm/bcm_demo_admin_console.html?e='  + encodeURIComponent('Login Successful!')); 
+  }
+
+  // Retrieve data from the Customer table and display
+  // con.connect(function(err) {
+  //  if (err) throw err;
+  //send Customer entries back to HTML to display:
+  //  var sql = "SELECT * FROM customer";
+  //  con.query(sql, function (err, result) {
+  //   if (err) throw err;
+  //    console.log(result)
+  //    res.render('text', result);
+  //  });
+  // });
+
   });
 
 app.listen(3000);
