@@ -60,10 +60,10 @@ app.post('/', (req, res) => {
 
   if (username == "") {
     // Return error if username field is empty
-    res.redirect('https://peteredwinsmith.github.io/ecm/index.html?cde='  + encodeURIComponent("0101")); 
+    res.redirect('https://peteredwinsmith.github.io/ecm/index.html?cde='  + encodeURIComponent("0201")); 
   } else {
     // Redirect to the login page and respond with a success message
-    res.redirect('https://peteredwinsmith.github.io/ecm/bcm_demo_admin_console.html?cde='  + encodeURIComponent("Login Successful!")); 
+    res.redirect('https://peteredwinsmith.github.io/ecm/login.html?cde='  + encodeURIComponent("Login Successful!")); 
   }
 
   // Retrieve data from the Customer table and display
