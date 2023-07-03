@@ -39,7 +39,7 @@
 
 <p style="padding: 0 0 1em 0;" class="text-2xl font-bold">Login</p>
 
-<p class="text-xl text-red-500 font-italic" id="errmsg"></p>
+<p style="padding-bottom: 0.25rem" class="text-xl text-red-500 font-italic" id="errmsg"></p>
 
 <script>
 	// Display form data validation message
@@ -48,7 +48,8 @@
 	const urlParams = new URLSearchParams(queryString);
 	const msg = urlParams.get('cde');
 	console.log(msg);
-	if (msg == "0101") {
+	const textMsg = "";
+	if (msg == "1001") {
     // Display message that Username must be entered
     const textMsg = "Error: Username must be entered"; 
     } else {
