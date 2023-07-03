@@ -39,6 +39,8 @@
 
 <p style="padding-bottom: 0.5em;" class="text-2xl font-bold">Login</p>
 
+<p style="padding-bottom: 0.5em;" class="text-xl text-red-500 font-italic" id="errmsg"></p>
+
 <script>
 	// Display form data validation message
 	const queryString = window.location.search;
@@ -49,7 +51,7 @@
 	var textMsg = "";
 	if (msg == null) {
 	// No message when screen first displayed
-	} else if (msg == "1001") {
+	} else if (msg == "0101") {
     // Display message that Username must be entered
     textMsg = "Error: Username must be entered"; 
     } else {
@@ -83,8 +85,6 @@
 </form>
 
 <br></br>
-
-<p style="padding-bottom: 0.5em;" class="text-xl text-red-500 font-italic" id="errmsg"></p>
 
 <br></br>
 
