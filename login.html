@@ -40,16 +40,52 @@
 
 	<p style="padding-bottom: 0.5em;" class="text-2xl font-bold">Login</p>
 
+    <script src="login.js"></script>
+
 	<p style="padding-bottom: 0.5em;" class="text-xl text-red-500 italic" id="errmsg">Default message</p>
 
 	<script>
-		const queryString = window.location.search;
-		console.log(queryString);
-		const urlParams = new URLSearchParams(queryString);
-		const error = urlParams.get('cde')
-		console.log(error);
-		document.getElementById("errmsg").innerHTML = error
-	</script>
+        // Display form data validation message
+        const queryString = window.location.search;
+        console.log(queryString);
+        const urlParams = new URLSearchParams(queryString);
+        const msg = urlParams.get('cde');
+        console.log(msg);
+        var textMsg = "";
+        if (msg == null) {
+        // No message when screen first displayed
+        } else if (msg == "0201") {
+        // Display message that Username must be entered
+        textMsg = "Error: Username must be entered"; 
+        } else {
+        // Display default message
+        textMsg = "Error: Invalid input"; 
+        }
+        document.getElementById("errmsg").innerHTML = textMsg;
+        console.log(textMsg);
+    </script>
+
+<form action="http://localhost:3000" method="POST" enctype="application/x-www-form-urlencoded">
+    <div class="mb-6">
+    <label for="username" size=30 class="block mb-2 text-medium font-medium font-bold text-gray-900 dark:text-white">Your Username</label>
+    <input type="text" id="username" name="username" class="input-content-offset-10 ps-1 bg-gray-50 border border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-90 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="jdoe">
+    </div>
+    <div class="mb-6">
+    <label for="pswd" size=20 class="block mb-2 text-medium font-medium font-bold text-gray-900 dark:text-white">Your Password</label>
+    <input type="password" id="pswd" name="pswd" class="input-content-offset-10 ps-1 bg-gray-50 border border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-90 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="password">
+    </div>
+    <div class="mb-6">
+    <label for="email" size=30 class="block mb-2 text-medium font-medium font-bold text-gray-900 dark:text-white">Your Email</label>
+    <input type="email" id="email" name="email" class="input-content-offset-10 ps-1 bg-gray-50 border border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-90 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="jdoe@acme.com">
+    </div>
+    <div class="flex items-start mb-6">
+    <div class="flex items-center h-5">
+    <input id="remember" type="checkbox" value="" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800">
+    </div>
+    <label for="remember" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Remember me</label>
+    </div>
+    <button type="submit" class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-medium w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+</form>
 
 </div>
   
