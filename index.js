@@ -50,7 +50,7 @@ app.post('/', (req, res) => {
   const formData = req.body;
   const companyid = req.body.companyid;
 
-  // Print the form data to the console
+  // Display the form data on the console
   console.log(formData);
   console.log(companyid)
   console.log(req.headers);
@@ -61,7 +61,7 @@ app.post('/', (req, res) => {
     res.redirect('https://peteredwinsmith.github.io/ecm/index.html?cde='  + encodeURIComponent("0101")); 
   } else {
     // Redirect to the login page and respond with a success message
-    res.redirect('https://peteredwinsmith.github.io/ecm/login.html?cde='  + encodeURIComponent("Please login below!")); 
+    res.redirect('https://peteredwinsmith.github.io/ecm/login.html?cde='  + encodeURIComponent("0201")); 
   }
 
   // Retrieve data from the Customer table and display
