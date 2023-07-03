@@ -39,16 +39,24 @@
 
 <p style="padding: 0 0 1em 0;" class="text-2xl font-bold">Login</p>
 
-<p style="padding: 0 0 1em 0;" class="text-2xl text-red-500 font-italic" id="errmsg">Default message</p>
+<p class="text-xl text-red-500 font-italic" id="errmsg">Default message</p>
 
 <script>
+	// Display form data validation message
 	const queryString = window.location.search;
 	console.log(queryString);
 	const urlParams = new URLSearchParams(queryString);
-	const error = urlParams.get('cde')
-	console.log(error);
-	document.getElementById("errmsg").innerHTML = error
-	console.log(document.getElementById("errmsg").innerHTML);
+	const msg = urlParams.get('cde');
+	console.log(msg);
+	if (msg == "0101") {
+    // Display message that Username must be entered
+    const textMsg = "Error: Username must be entered"; 
+    } else {
+    // Display default message
+    const textMsg = "Error: Invalid input"; 
+    }
+	document.getElementById("errmsg").innerHTML = textMsg;
+	console.log(textMsg);
 </script>
 
 <form action="http://localhost:3000" method="POST" enctype="application/x-www-form-urlencoded">
