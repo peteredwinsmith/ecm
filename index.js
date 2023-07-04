@@ -59,15 +59,16 @@ http.createServer(function (req, res) {
 app.post('/', (req, res) => {
   // Get the form data from the request
   const formData = req.body;
-  const companyid = req.body.companyid;
+  const companyId = req.body.companyId;
+  const screenId = req.body.screenId;
   const url = req.protocol;
 
   // Display the form data on the console
   console.log(formData);
-  console.log(companyid);
-  console.log(url);
+  console.log(companyId);
+  console.log(screenId);
 
-  if (companyid == "") {
+  if (companyId == "") {
     // Return error if username field is empty
     res.redirect('https://peteredwinsmith.github.io/ecm/index.html?cde='  + encodeURIComponent("0101")); 
     // res.redirect('back?cde='  + encodeURIComponent("0101")); 
