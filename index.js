@@ -59,25 +59,38 @@ http.createServer(function (req, res) {
 app.post('/', (req, res) => {
   // Get the form data from the request
   const formData = req.body;
-  const companyId = req.body.companyId;
   const screenId = req.body.screenId;
-  const url = req.protocol;
 
   // Display the form data on the console
   console.log(formData);
-  console.log(companyId);
   console.log(screenId);
 
-  if (companyId == "") {
-    // Return error if username field is empty
-    res.redirect('https://peteredwinsmith.github.io/ecm/index.html?cde='  + encodeURIComponent("0101")); 
-    // res.redirect('back?cde='  + encodeURIComponent("0101")); 
-    
-  } else {
-    // Redirect to the login page and respond with a success message
-    res.redirect('https://peteredwinsmith.github.io/ecm/login.html?cde='  + encodeURIComponent("0201")); 
-  }
+  if (screenId == "01-cid") {
+    const companyId = req.body.companyId;
+    console.log(companyId);
 
+    if (companyId == "") {
+      // Return error if username field is empty
+      res.redirect('https://peteredwinsmith.github.io/ecm/index.html?cde='  + encodeURIComponent("0101")); 
+      // res.redirect('back?cde='  + encodeURIComponent("0101")); 
+    } else {
+      // Redirect to the login page and respond with a success message
+      res.redirect('https://peteredwinsmith.github.io/ecm/login.html?cde='  + encodeURIComponent("0201")); 
+    }
+  } else {
+    const username = req.body.username;
+    const password = req.body.pswd;
+    const email = req.body.email;
+    
+    if (username == "") {
+      // Return error if username field is empty
+      res.redirect('https://peteredwinsmith.github.io/ecm/login.html?cde='  + encodeURIComponent("0202")); 
+    } else {
+      // Redirect to the login page and respond with a success message
+      res.redirect('https://peteredwinsmith.github.io/ecm/index.html?cde='  + encodeURIComponent("0102")); 
+    }
+  }
+  
   // Retrieve data from the Customer table and display
   // con.connect(function(err) {
   //  if (err) throw err;
