@@ -43,7 +43,18 @@ const app = express();
 
 app.use(express.urlencoded({ extended: false }));
 
-// app.use(bodyParser.json());
+const http = require('http');
+ 
+// Create a server object
+http.createServer(function (req, res) {
+     
+    // http header
+    res.writeHead(200, {'Content-Type': 'text/html'});
+     
+    const url = req.url;
+     
+    console.log(url);
+    });
 
 app.post('/', (req, res) => {
   // Get the form data from the request
@@ -52,13 +63,13 @@ app.post('/', (req, res) => {
 
   // Display the form data on the console
   console.log(formData);
-  console.log(companyid)
-  console.log(req.headers);
-  // console.log(req)
+  console.log(companyid);
 
   if (companyid == "") {
     // Return error if username field is empty
     res.redirect('https://peteredwinsmith.github.io/ecm/index.html?cde='  + encodeURIComponent("0101")); 
+    // res.redirect('back?cde='  + encodeURIComponent("0101")); 
+    
   } else {
     // Redirect to the login page and respond with a success message
     res.redirect('https://peteredwinsmith.github.io/ecm/login.html?cde='  + encodeURIComponent("0201")); 
