@@ -60,10 +60,12 @@ app.post('/', (req, res) => {
   // Get the form data from the request
   const formData = req.body;
   const companyid = req.body.companyid;
+  const url = req.url;
 
   // Display the form data on the console
   console.log(formData);
   console.log(companyid);
+  console.log(url);
 
   if (companyid == "") {
     // Return error if username field is empty
