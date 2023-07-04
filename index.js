@@ -60,7 +60,7 @@ app.post('/', (req, res) => {
   // Get the form data from the request
   const formData = req.body;
   const companyid = req.body.companyid;
-  const url = req.url;
+  const url = req.protocol;
 
   // Display the form data on the console
   console.log(formData);
