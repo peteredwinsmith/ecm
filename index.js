@@ -1,4 +1,5 @@
 var mysql = require('mysql2');
+var companyValid = "N";
 
 var con = mysql.createConnection({
   host: "localhost",
@@ -40,7 +41,7 @@ con.connect(function(err) {
 const express = require('express');
 var bodyParser = require('body-parser');
 const app = express();
-var companyValid = "N"
+
 
 app.use(express.urlencoded({ extended: false }));
 
@@ -97,7 +98,7 @@ app.post('/', (req, res) => {
       res.redirect('https://peteredwinsmith.github.io/ecm/login.html?cde='  + encodeURIComponent("0202")); 
     } else {
       // Redirect to the login page and respond with a success message
-      res.redirect('https://peteredwinsmith.github.io/ecm/index.html?cde='  + encodeURIComponent("0102")); 
+      res.redirect('https://peteredwinsmith.github.io/ecm/adminConsole.html?cde='  + encodeURIComponent("0301")); 
     }
   }
   

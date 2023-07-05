@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>RC BCM Demo</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="login.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="header">
+	<img src="rollcall-logo-white-rev-withtext.png" alt="Roll Call Logo" width="90" height="90" class="rounded hp">
+	<p class="text-white text-4xl">Roll Call BCM Demo</p>
+	<p class="text-green-700 text-4xl">Admin Console</p>
+ 
+</div>
+
+<div class="topnav">
+	<a href="https://peteredwinsmith.github.io/ecm/index.html">Home</a>
+	<a href="#">Admin Console</a>
+	<a href="#">Mobile Admin</a>
+	<a href="#">Mobile User</a>
+</div>
+
+<div class="row">
+	<div class="column side">
+		<h2>Section Menu</h2>
+		<ul>
+			<li><a href="#">Document Templates</a></li>
+			<li><a href="#">Assets</a></li>
+			<li><a href="#">Scenario Templates</a></li>
+			<li><a href="#">Employees</a></li>
+			<li><a href="#">BCM Events</a></li>
+            <li><a href="cssForms.html">CSS Forms</a></li>
+		</ul>
+	</div>
+  
+	<div class="column right">
+
+	<p style="padding-bottom: 0.5em;" class="text-2xl font-bold">Admin Console</p>
+
+	<p style="padding-bottom: 0.5em;" class="text-xl text-red-500 italic" id="errmsg">Default message</p>
+
+	<script>
+        // Display form data validation message
+        const queryString = window.location.search;
+        console.log(queryString);
+        const urlParams = new URLSearchParams(queryString);
+        const msg = urlParams.get('cde');
+        console.log(msg);
+        var textMsg = "";
+        if (msg == null) {
+        // No message when screen first displayed
+        } if (msg == "0102") {
+        // Display message that logged in successfully
+        textMsg = "Logged in Successfully"; 
+	    } else {
+        // No message when screen first displayed
+        } 
+        document.getElementById("errmsg").innerHTML = textMsg;
+        console.log(textMsg);
+    </script>
+
+</div>
+  
+</div>
+
+</body>
+</html>
