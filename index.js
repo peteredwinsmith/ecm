@@ -40,6 +40,7 @@ con.connect(function(err) {
 const express = require('express');
 var bodyParser = require('body-parser');
 const app = express();
+var companyValid = "N"
 
 app.use(express.urlencoded({ extended: false }));
 
@@ -55,7 +56,6 @@ app.post('/', (req, res) => {
   if (screenId == "01-cid") {
     const companyId = req.body.companyId;
     console.log(companyId);
-    var companyValid = "N"
 
     con.connect(function(err) {
       if (err) throw err;
@@ -74,6 +74,7 @@ app.post('/', (req, res) => {
       });
     });
 
+    console.log(companyId);
     console.log(companyValid);
     if (companyId == "") {
       // Return error if company ID field is empty
