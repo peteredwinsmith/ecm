@@ -57,13 +57,15 @@
         } else if (msg == "0201") {
         // Display message that user needs to login below
         textMsg = "Please login below"; 
-        } else if (msg == "0202") {
+        } else {
+        // } else if (msg == "0202") {
         // Display message that Username must be entered
         textMsg = "Error: Username must be entered"; 
-        } else {
+        } 
+        // else {
         // Display default message
-        textMsg = "Error: Invalid input"; 
-        }
+        //textMsg = "Error: Invalid input"; 
+        // }
         document.getElementById("errmsg").innerHTML = textMsg;
         console.log(textMsg);
     </script>

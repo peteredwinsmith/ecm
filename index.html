@@ -61,13 +61,15 @@
     } else if (msg == "0102") {
     // Display message that logged in successfully
     textMsg = "Logged in Successfully"; 
-    } else if (msg == "0103") {
+	} else {
+    // } else if (msg == "0103") {
     // Display message that logged in successfully
     textMsg = "Error: Company ID is not valid"; 
-    } else {
+    } 
+	// else {
     // Display default message
-    textMsg = "Error: Invalid input"; 
-    }
+    // textMsg = "Error: Invalid input"; 
+    // }
 	document.getElementById("errmsg").innerHTML = textMsg;
 	console.log(textMsg);
 </script>

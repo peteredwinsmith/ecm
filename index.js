@@ -64,7 +64,8 @@ app.post('/', (req, res) => {
         console.log(result);
         let text = "";
         for (let x in result) {
-           text = result[x].id;
+           text = result[x].slug;
+           console.log(text)
            if (text == companyId) {
              let companyValid = "Y";
              console.log(companyValid); 
@@ -73,6 +74,7 @@ app.post('/', (req, res) => {
       });
     });
 
+    console.log(companyValid);
     if (companyId == "") {
       // Return error if company ID field is empty
       res.redirect('https://peteredwinsmith.github.io/ecm/index.html?cde='  + encodeURIComponent("0101")); 
