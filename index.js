@@ -43,19 +43,6 @@ const app = express();
 
 app.use(express.urlencoded({ extended: false }));
 
-const http = require('http');
- 
-// Create a server object
-http.createServer(function (req, res) {
-     
-    // http header
-    res.writeHead(200, {'Content-Type': 'text/html'});
-     
-    const url = req.url;
-     
-    console.log(url);
-    });
-
 app.post('/', (req, res) => {
   // Get the form data from the request
   const formData = req.body;
@@ -68,14 +55,34 @@ app.post('/', (req, res) => {
   if (screenId == "01-cid") {
     const companyId = req.body.companyId;
     console.log(companyId);
+    var companyValid = "N"
+
+    con.connect(function(err) {
+      if (err) throw err;
+      con.query("SELECT * FROM company", function (err, result, fields) {
+        if (err) throw err;
+        console.log(result);
+        let text = "";
+        for (let x in result) {
+           text = result[x].id;
+           if (text == companyId) {
+             let companyValid = "Y";
+             console.log(companyValid); 
+           } 
+        }
+      });
+    });
 
     if (companyId == "") {
-      // Return error if username field is empty
+      // Return error if company ID field is empty
       res.redirect('https://peteredwinsmith.github.io/ecm/index.html?cde='  + encodeURIComponent("0101")); 
       // res.redirect('back?cde='  + encodeURIComponent("0101")); 
-    } else {
+    } else if (companyValid == "Y") {
       // Redirect to the login page and respond with a success message
       res.redirect('https://peteredwinsmith.github.io/ecm/login.html?cde='  + encodeURIComponent("0201")); 
+    } else {
+      // Redirect to the login page and respond with company not valid message
+      res.redirect('https://peteredwinsmith.github.io/ecm/index.html?cde='  + encodeURIComponent("0103")); 
     }
   } else {
     const username = req.body.username;
