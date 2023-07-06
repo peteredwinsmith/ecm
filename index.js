@@ -29,7 +29,7 @@ app.post('/', (req, res) => {
 
     if (companyId == "") {
         // Return error if company ID field is empty
-        res.redirect('https://peteredwinsmith.github.io/ecm/index.html?companyId=${CompanyId}?cde='  + encodeURIComponent("0101")); 
+        res.redirect('https://peteredwinsmith.github.io/ecm/index.html?cde='  + encodeURIComponent("0101")); 
     } else {
         con.connect(function(err) {
             if (err) throw err;
