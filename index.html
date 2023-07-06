@@ -47,8 +47,8 @@
 	// Display form data validation message
 	const queryString = window.location.search;
 	console.log(queryString);
-	const Company_Id = req.session.Company_Id;
-	console.log('Session data' + Company_Id);
+	// const Company_Id = req.session.Company_Id;
+	// console.log('Session data' + Company_Id);
 	const urlParams = new URLSearchParams(queryString);
 	const msg = urlParams.get('cde');
 	console.log(msg);
