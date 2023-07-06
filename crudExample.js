@@ -9,9 +9,39 @@ var con = mysql.createConnection({
   insecureAuth: true
 });
 
+con.connect(function(err) {
+  if (err) throw err;
+  con.query("SELECT * FROM customer", function (err, result, fields) {
+    if (err) throw err;
+    console.log(result);
+    let text = "";
+    for (let x in result) {
+       text = result[x].name;
+       if (text == "Pam") {
+         console.log(result[x].address); 
+       } else if (text == "Max") {
+         //  block of code to be executed if the condition is false
+       } else {
+         //  block of code to be executed if the condition is false
+       }
+    }
+  });
+});
+
+con.connect(function(err) {
+  if (err) throw err;
+  //Update the address field:
+  var sql = "UPDATE customer SET address = 'Rye' WHERE address = 'Rosebud'";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log(result.affectedRows + " record(s) updated");
+  });
+});
+
 const express = require('express');
 var bodyParser = require('body-parser');
 const app = express();
+
 
 app.use(express.urlencoded({ extended: false }));
 
@@ -30,11 +60,18 @@ app.post('/', (req, res) => {
 
     con.connect(function(err) {
       if (err) throw err;
-      con.query("SELECT * FROM company where slug = 'rollcall'", function (err, result) {
+      con.query("SELECT * FROM company", function (err, result, fields) {
         if (err) throw err;
         console.log(result);
-        let companyValid = "Y";
-        console.log(companyValid); 
+        let text = "";
+        for (let x in result) {
+           text = result[x].slug;
+           console.log(text)
+           if (text == companyId) {
+             let companyValid = "Y";
+             console.log(companyValid); 
+           } 
+        }
       });
     });
 
