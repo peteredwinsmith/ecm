@@ -82,11 +82,11 @@ app.post('/', (req, res) => {
       res.redirect('https://peteredwinsmith.github.io/ecm/index.html?cde='  + encodeURIComponent("0101")); 
       // res.redirect('back?cde='  + encodeURIComponent("0101")); 
     } else if (companyValid == "Y") {
-      // Redirect to the login page and respond with a success message
+      // Redirect to the login page - company ID is valid
       res.redirect('https://peteredwinsmith.github.io/ecm/login.html?cde='  + encodeURIComponent("0201")); 
     } else {
       // Redirect to the login page and respond with company not valid message
-      res.redirect('https://peteredwinsmith.github.io/ecm/index.html?cde='  + encodeURIComponent("0103")); 
+      res.redirect('https://peteredwinsmith.github.io/ecm/index.html?cde='  + encodeURIComponent("0102")); 
     }
   } else {
     const username = req.body.username;
