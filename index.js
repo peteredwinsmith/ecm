@@ -55,7 +55,6 @@ app.post('/', (req, res) => {
   } else {
     const username = req.body.username;
     const password = req.body.pswd;
-    const email = req.body.email;
     
     if (username == "") {
       // Return error if username field is empty
