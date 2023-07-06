@@ -1,5 +1,4 @@
 var mysql = require('mysql2');
-var companyValid = "N";
 
 var con = mysql.createConnection({
   host: "localhost",
@@ -28,29 +27,29 @@ app.post('/', (req, res) => {
     const companyId = req.body.companyId;
     console.log(companyId);
 
-    con.connect(function(err) {
-      if (err) throw err;
-      con.query("SELECT * FROM company where slug = 'rollcall'", function (err, result) {
-        if (err) throw err;
-        console.log(result);
-        let companyValid = "Y";
-        console.log(companyValid); 
-      });
-    });
-
-    console.log(companyId);
-    console.log(companyValid);
     if (companyId == "") {
-      // Return error if company ID field is empty
-      res.redirect('https://peteredwinsmith.github.io/ecm/index.html?cde='  + encodeURIComponent("0101")); 
-      // res.redirect('back?cde='  + encodeURIComponent("0101")); 
-    } else if (companyValid == "Y") {
-      // Redirect to the login page - company ID is valid
-      res.redirect('https://peteredwinsmith.github.io/ecm/login.html?cde='  + encodeURIComponent("0201")); 
+        // Return error if company ID field is empty
+        res.redirect('https://peteredwinsmith.github.io/ecm/index.html?companyId=${CompanyId}?cde='  + encodeURIComponent("0101")); 
     } else {
-      // Redirect to the login page and respond with company not valid message
-      res.redirect('https://peteredwinsmith.github.io/ecm/index.html?cde='  + encodeURIComponent("0102")); 
+        con.connect(function(err) {
+            if (err) throw err;
+            var sql = 'SELECT slug FROM company WHERE slug = ' + mysql.escape(companyId);
+            console.log(sql);
+            con.query(sql, function (err, result) {
+              if (err) throw err;
+              console.log(result);
+              if (typeof result[0] == 'undefined') {
+                 // Redirect to the login page and respond with company not valid message
+                 res.redirect('https://peteredwinsmith.github.io/ecm/index.html?cde='  + encodeURIComponent("0102")); 
+              }
+              else if (companyId == result[0].slug) {
+                // Redirect to the login page - company ID is valid
+                res.redirect('https://peteredwinsmith.github.io/ecm/login.html?cde='  + encodeURIComponent("0201")); 
+              }
+            });
+          });
     }
+    
   } else {
     const username = req.body.username;
     const password = req.body.pswd;
