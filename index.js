@@ -40,6 +40,7 @@ app.post('/', (req, res) => {
               console.log(result);
               if (typeof result[0] == 'undefined') {
                  // Redirect to the login page and respond with company not valid message
+                 req.session.Company_Id = companyId;
                  res.redirect('https://peteredwinsmith.github.io/ecm/index.html?cde='  + encodeURIComponent("0102")); 
               }
               else if (companyId == result[0].slug) {
