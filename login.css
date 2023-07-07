@@ -22,6 +22,9 @@ body {
   text-align: center;
 }
 
+@media screen and (max-width: 600px) {
+  .header
+}
 /* Style the top navigation bar */
 .topnav {
   overflow: hidden;
