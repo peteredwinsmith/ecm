@@ -48,10 +48,17 @@ app.post('/', (req, res) => {
                  //  });
                  // Explicitly end the response.
                  // res.end();
-                 res.redirect('https://peteredwinsmith.github.io/ecm/index.html?cde='  + encodeURIComponent("0102")({
-                  pathname:"/",
-                  query:req.query,
-                })); 
+                 // Add the form fields to the redirect object
+                 // Create a redirect object
+                const redirect = {
+                url: req.headers.referer,
+                status: 302,
+                };
+                redirect.query = {
+                companyId,
+                screenId,
+                };
+                 res.redirect('https://peteredwinsmith.github.io/ecm/index.html?cde='  + encodeURIComponent("0102")); 
               }
               else if (companyId == result[0].slug) {
                 // Redirect to the login page - company ID is valid
