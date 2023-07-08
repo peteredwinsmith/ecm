@@ -40,24 +40,17 @@ app.post('/', (req, res) => {
               if (err) throw err;
               console.log(result);
               if (typeof result[0] == 'undefined') {
-                 // Redirect to the login page and respond with company not valid message.
-                 // Return the form data to the originating website page.
-                 // res.json({
-                 // companyId: companyId,
-                 // screenId: screenId,
-                 //  });
-                 // Explicitly end the response.
-                 // res.end();
-                 // Add the form fields to the redirect object
-                 // Create a redirect object
-                const redirect = {
-                url: req.headers.referer,
-                status: 302,
-                };
-                redirect.query = {
-                companyId
-                };
-                 res.redirect('https://peteredwinsmith.github.io/ecm/index.html?cde='  + encodeURIComponent("0102")); 
+                // Add the form fields to the redirect object
+                // Create a redirect object
+                // const redirect = {
+                // url: req.headers.referer,
+                // status: 302,
+                // };
+                // redirect.query = {
+                // companyId
+                // };
+                res.render('https://peteredwinsmith.github.io/ecm/index.html?cde='  + encodeURIComponent("0102")); 
+                // res.redirect('https://peteredwinsmith.github.io/ecm/index.html?cde='  + encodeURIComponent("0102")); 
               }
               else if (companyId == result[0].slug) {
                 // Redirect to the login page - company ID is valid
