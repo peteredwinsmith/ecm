@@ -55,8 +55,7 @@ app.post('/', (req, res) => {
                 status: 302,
                 };
                 redirect.query = {
-                companyId,
-                screenId,
+                companyId
                 };
                  res.redirect('https://peteredwinsmith.github.io/ecm/index.html?cde='  + encodeURIComponent("0102")); 
               }
