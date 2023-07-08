@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MySQL Data</title>
+</head>
+<body>
+  <form action="http://localhost:3000" method="POST" enctype="application/x-www-form-urlencoded">
+        <input type="hidden" id="screenId" name="screenId" value="03-adc">
+  </form>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Address</th>
+        <th>ID</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for (const user of customers) { %>
+        <tr>
+          <td><%= customer.name %></td>
+          <td><%= customer.address %></td>
+          <td><%= customer.id %></td>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>
+</body>
+</html>
