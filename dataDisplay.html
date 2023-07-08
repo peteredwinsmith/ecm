@@ -4,9 +4,6 @@
   <title>MySQL Data</title>
 </head>
 <body>
-  <form action="http://localhost:3000" method="POST" enctype="application/x-www-form-urlencoded">
-        <input type="hidden" id="screenId" name="screenId" value="03-adc">
-  </form>
   <table>
     <thead>
       <tr>
@@ -16,7 +13,7 @@
       </tr>
     </thead>
     <tbody>
-      <% for (const user of customers) { %>
+      <% for customers in rows { %>
         <tr>
           <td><%= customer.name %></td>
           <td><%= customer.address %></td>
