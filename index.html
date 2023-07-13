@@ -41,6 +41,8 @@
 
 <p style="padding-bottom: 0.5em;" class="text-2xl font-bold">Login</p>
 
+<p style="padding-bottom: 0.5em;" class="text-base text-red-500 italic" id="errmsg"></p>
+
 <form action="http://localhost:3000" method="POST" enctype="application/x-www-form-urlencoded">
 <div class="mb-6">
 <label for="companyId" size=30 class="block mb-2 text-medium font-medium font-bold text-gray-900 dark:text-white">Company ID</label>
@@ -52,6 +54,12 @@
 
 </div>
 </div>
+
+<footer>
+	<div class="footer">
+		
+	</div>
+</footer>
 
 <script>
 	// Display form data validation message
@@ -75,12 +83,6 @@
 	document.getElementById("errmsg").innerHTML = textMsg;
 	console.log(textMsg);
 </script>
-
-<footer>
-	<div class="footer">
-		<p style="padding-bottom: 0.5em;" class="text-base text-red-500 italic" id="errmsg"></p>
-	</div>
-</footer>
 
 </body>
 
