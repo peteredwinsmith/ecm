@@ -68,7 +68,7 @@
 
 <script>
 	let c = document.cookie.split(";").reduce( (ac, cv, i) => Object.assign(ac, {[cv.split('=')[0]]: cv.split('=')[1]}), {});
-    console.log(c);
+    console.log("index", c);
 </script>
 
 <form action="http://localhost:3000" method="POST" enctype="application/x-www-form-urlencoded">
