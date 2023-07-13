@@ -66,6 +66,11 @@
 	console.log(textMsg);
 </script>
 
+<script>
+	let c = document.cookie.split(";").reduce( (ac, cv, i) => Object.assign(ac, {[cv.split('=')[0]]: cv.split('=')[1]}), {});
+    console.log(c);
+</script>
+
 <form action="http://localhost:3000" method="POST" enctype="application/x-www-form-urlencoded">
 <div class="mb-6">
 <label for="companyId" size=30 class="block mb-2 text-medium font-medium font-bold text-gray-900 dark:text-white">Company ID</label>
