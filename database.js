@@ -27,6 +27,14 @@ var con = mysql.createConnection({
   }
   exports.getCookie = getCookie;
 
+  function setCookie(cname,cvalue) {
+    const d = new Date();
+    d.setTime(d.getTime() + 5000);
+    let expires = "expires=" + d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  }
+  exports.setCookie = setCookie;
+
   function cidCheck(companyId) {
     console.log(companyId);
     if (companyId == "") {
