@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MySQL Data</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" rel="stylesheet">
+</head>
+<body>
+<h2> Customer List</h2>
+
+<div class="relative overflow-x-auto">
+  <table class="w-9/12 text-sm text-left text-gray-500 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <tr>
+              <th scope="col" class="px-6 py-3">
+                  Name
+              </th>
+              <th scope="col" class="px-6 py-3">
+                  Address
+              </th>
+              <th scope="col" class="px-6 py-3">
+                  ID
+              </th>
+          </tr>
+      </thead>
+      <tbody>
+          <% for(customer in rows) { %>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <td class="px-6 py-4"><%= rows[customer].name %></td>
+              <td class="px-6 py-4"><%= rows[customer].address.substring(0,12)%></td>
+              <td class="px-6 py-4"><%= rows[customer].id %></td>
+            </tr>
+          <% } %>
+      </tbody>
+  </table>
+</div>
+
+<br></br>
+
+<img src="/200.jpg">
+
+</body>
+</html>

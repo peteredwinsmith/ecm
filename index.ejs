@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>RC BCM Demo</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="style.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="header">
+	<img src="rollcall-logo-white-rev-withtext.png" alt="Roll Call Logo" width="90" height="90" class="rounded hp">
+	<p class="text-white text-4xl">Roll Call BCM Demo</p>
+	<p class="text-green-700 text-4xl">Homepage</p>
+	 
+</div>
+
+<div class="topnav">
+	<a href="https://peteredwinsmith.github.io/ecm/index.html">Home</a>
+	<a href="login.html">Admin Console</a>
+	<a href="#">Mobile Admin</a>
+	<a href="#">Mobile User</a>
+	<a href="cssForms.html">CSS Forms</a>
+</div>
+
+<div class="row">
+
+ 	<div class="column side">
+		<h2>Section Menu</h2>
+	<ul>
+		<li><a href="index.html">Home</a></li>
+		<li><a href="login.html">Admin Console</a></li>
+		<li><a href="#">Mobile Admin</a></li>
+		<li><a href="#">Mobile User</a></li>
+		<li><a href="cssForms.html">CSS Forms</a></li>
+	</ul>
+	</div>
+  
+<div class="column right">
+
+<script src="https://peteredwinsmith.github.io/ecm/database.js"></script>
+
+<p style="padding-bottom: 0.5em;" class="text-2xl font-bold">Login</p>
+
+<p style="padding-bottom: 0.5em;" class="text-base text-red-500 italic" id="errmsg"></p>
+
+<script>
+	// Display form data validation message
+	// const queryString = window.location.search;
+	// console.log(queryString);
+	// const urlParams = new URLSearchParams(queryString);
+	// let c = document.cookie.split(";").reduce( (ac, cv, i) => Object.assign(ac, {[cv.split('=')[0]]: cv.split('=')[1]}), {});
+	//let x = document.cookie;
+	// console.log("raw cookie", x);
+    // console.log("object", c);
+	// console.log("error code", c.errorCode);
+	// let d = getCookie("compId");
+	setCookie("screenId", "01-cid");
+	console.log("screen ID", getCookie("screenId"));
+	console.log("company ID", getCookie("compId"));
+	const msg = getCookie("errorCode");
+	console.log("Error code", msg);
+	if (getCookie("compId") === null) {
+  	// The form field element does not exist yet
+	} else {
+	//	document.getElementById("companyId").value = d; 
+	};
+	// const msg = urlParams.get('cde');
+	// const msg = c.errorCode;
+	
+	var textMsg = "";
+	if (msg == "") {
+	// No message when screen first displayed
+	} else if (msg == "0101") {
+    // Display message that Username must be entered
+    textMsg = "Error: Company ID must be entered"; 
+    } else {
+    // Display message that Company ID is not on the database (Code 0102)
+    textMsg = "Error: Company ID is not valid"; 
+    } 
+	document.getElementById("errmsg").innerHTML = textMsg;
+	console.log(textMsg);
+</script>
+
+<form name = "companyInput" action="http://localhost:3000" method="POST" enctype="application/x-www-form-urlencoded">
+<div class="mb-6">
+<label for="companyId" size=30 class="block mb-2 text-medium font-medium font-bold text-gray-900 dark:text-white">Company ID</label>
+<input type="text" id="companyId" name="companyId" class="input-content-offset-10 ps-1 bg-gray-50 border border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-90 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+</div>
+<input type="hidden" id="screenId" name="screenId" value="01-cid">
+<button type="submit" class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-medium w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+</form>
+
+</div>
+</div>
+
+<footer>
+	<div class="footer">
+		
+	</div>
+</footer>
+
+</body>
+
+</html>
