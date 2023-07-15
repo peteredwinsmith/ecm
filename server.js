@@ -83,7 +83,7 @@ app.post('/', (req, res) => {
               // Redirect to the login page - company ID is valid
               res.cookie('errorCode', "0201", { expires: new Date(Date.now() + 5000), secure: false,
               httpOnly: false });
-              res.redirect(302,"/login?cde=" + encodeURIComponent("0201"));
+              res.redirect(302,"/login");
             }
           });
       });
@@ -96,7 +96,11 @@ app.post('/', (req, res) => {
       // Return error if username field is empty
       res.cookie('errorCode', "0202", { expires: new Date(Date.now() + 5000), secure: false,
       httpOnly: false });
-      res.redirect(302,"/login?cde=" + encodeURIComponent("0202"));
+      res.cookie('username', username, { expires: new Date(Date.now() + 5000), secure: false,
+      httpOnly: false });
+      res.cookie('password', password, { expires: new Date(Date.now() + 5000), secure: false,
+      httpOnly: false });
+      res.redirect(302,"/login");
     } else {
       // Redirect to the login page and respond with a success message
       res.cookie('errorCode', "0301", { expires: new Date(Date.now() + 5000), secure: false,
