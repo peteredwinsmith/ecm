@@ -1,6 +1,15 @@
 
 // client side functions
-  
+var mysql = require('mysql2');
+
+var con = mysql.createConnection({
+  host: "localhost",
+  user: "peteredwinsmith",
+  password: "F5aZMmZ2ne9NKCFN",
+  database: "bcm",
+  insecureAuth: false
+});
+
   function calcTest2(x) {
     const y = 20;
     const z = x * y;
