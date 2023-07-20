@@ -1,0 +1,34 @@
+function calcTest(x) {
+  const y = q0;
+  const z = x * y;
+  return (z);
+};
+exports.calcTest2 = calcTest2;
+
+
+function calcTest2(x) {
+    const y = 20;
+    const z = x * y;
+    return (z);
+};
+exports.calcTest2 = calcTest2;
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+    }
+  return "";
+};
+exports.getCookie = getCookie;
+
+function setCookie(cname,cvalue) {
+    const d = new Date();
+    d.setTime(d.getTime() + 5000);
+    let expires = "expires=" + d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  };
+exports.setCookie = setCookie;

@@ -1,1 +1,40 @@
-{"en":{"login": "Login", "companyId": "Company ID", "button": "Click here"},"fr":{"login": "Connexion", "companyId": "Identifiant de lentreprise", "button": "Cliquez ici"}}
+{
+"en":
+{
+"login": "Login",
+"companyId": "Company ID",
+"button": "Click here",
+"home": "Home",
+"adminConsole": "Admin Console",
+"mobileAdmin": "Mobile Admin",
+"mobileUser": "Mobile User",
+"cssForms": "CSS Forms",
+"welcome": "Welcome",
+"create": "Create",
+"edit": "Edit",
+"delete": "Delete",
+"customerList": "Customer List",
+"id": "ID",
+"firstName": "First Name",
+"suburb": "Suburb"
+},
+"fr":
+{
+"login": "Connexion",
+"companyId": "Identifiant de lentreprise",
+"button": "Cliquez ici",
+"home": "Maison",
+"adminConsole": "Console d'administration",
+"mobileAdmin": "Administrateur mobile",
+"mobileUser": "Utilisateur mobile",
+"cssForms": "Formulaires CSS",
+"welcome": "Bienvenue",
+"create": "Créer",
+"edit": "Modifier",
+"delete": "Effacer",
+"customerList": "Liste de clients",
+"id": "ID",
+"firstName": "Prénom",
+"suburb": "Banlieue"
+}
+}
