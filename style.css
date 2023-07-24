@@ -21,7 +21,7 @@ body {
   text-align: center;
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 600px) {
   .header
 }
 
@@ -48,7 +48,7 @@ body {
   color: black;
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 600px) {
   .topnav
 }
 
@@ -75,7 +75,7 @@ body {
 }
 
 /* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 600px) {
   .column.side, .column.right {
     width: 100%;
   }
@@ -96,20 +96,21 @@ body {
 }
 
 /* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 600px) {
   .footer {
     width: 100%;
   }
 }
 
+/* Centre text on customised buttons */
+.flex {
+  display: flex;
+  justify-content: center;
+}
+
 /* Rounded */
 .rounded {
     border-radius: 15px;
-}
-
-/* Convert text to uppercase */
-.uppercase {
-  text-transform: uppercase;
 }
 
 /* Float image right aligned */
@@ -128,16 +129,6 @@ ul {
 li a {
   display: block;
   width: 200px;
-}
-
-table {
-  width: 70%;
-  border-collapse: collapse;
-}
-
-th, td {
-  border: 1px solid black;
-  padding: 5px;
 }
 
 </style>
