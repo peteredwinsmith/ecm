@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>RC BCM Demo</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://peteredwinsmith.github.io/ecm/style.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="header">
+	<img src="https://peteredwinsmith.github.io/ecm/rollcall-logo-white-rev-withtext.png" alt="Roll Call Logo" width="90" height="90" class="rounded hp">
+	<p class="text-white text-4xl">Roll Call BCM Demo</p>
+	<p class="text-green-700 text-4xl"><%= dictionary.editCustomer %></p>
+ 
+</div>
+
+<div class="topnav">
+	<a href="/">Home</a>
+	<a href="/admin">Admin Console</a>
+	<a href="#">Mobile Admin</a>
+	<a href="#">Mobile User</a>
+</div>
+
+<div class="row">
+	<div class="column side">
+		<h2>Section Menu</h2>
+		<ul>
+			<li><a href="#">Document Templates</a></li>
+			<li><a href="#">Assets</a></li>
+			<li><a href="#">Scenario Templates</a></li>
+			<li><a href="#">Employees</a></li>
+			<li><a href="#">BCM Events</a></li>
+            <li><a href="cssForms.html">CSS Forms</a></li>
+			<br></br>
+			<li><a class="text-red-500 text-bold uppercase">LANG: <%= langCode %></a></li>
+		</ul>
+	</div>
+  
+	<div class="column right">
+
+    <script src="https://peteredwinsmith.github.io/ecm/database.js"></script>
+
+	<p style = "margin-left: 800px;" class="text-lg test-bold"><%= dictionary.welcome %> <%= firstName %></p>
+
+	<p style="padding-bottom: 0.5em;" class="text-2xl font-bold"><%= dictionary.editCustomer %></p>
+
+	<script>
+        setCookie("screenId", "05-cue");
+	    console.log("screen ID", getCookie("screenId"));
+    </script>
+
+<form action="/editCustomer" method="POST" enctype="application/x-www-form-urlencoded">
+    <div class="mb-6">
+    <label for="firstname" size=30 class="block mb-2 text-medium font-medium font-bold text-gray-900 dark:text-white"><%= dictionary.firstName %></label>
+    <input type="text" id="firstname" name="firstname" class="input-content-offset-10 ps-1 bg-gray-50 border border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-90 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="<%= rows[0].first_name %>">
+    </div>
+    <div class="mb-6">
+    <label for="suburb" size=20 class="block mb-2 text-medium font-medium font-bold text-gray-900 dark:text-white"><%= dictionary.suburb %></label>
+    <input type="suburb" id="suburb" name="suburb" class="input-content-offset-10 ps-1 bg-gray-50 border border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-90 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="<%= rows[0].suburb %>">
+    </div>
+    <input type="hidden" id="recordId" name="recordId" value="<%= rows[0].id %>">
+    <button type="submit" class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-medium w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><%= dictionary.save %></button>
+</form>
+
+</div>
+  
+</div>
+
+<footer>
+	<div class="footer">
+	</div>
+</footer>
+
+</body>
+</html>

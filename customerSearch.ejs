@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Customer List</title>
+</head>
+<body>
+  <h1>Customer List</h1>
+  <input type="text" id="search" placeholder="Search by first name or suburb">
+  <table>
+    <thead>
+    <tr>
+    <th>ID</th>
+    <th>First Name</th>
+    <th>Suburb</th>
+    </tr>
+    </thead>
+    <tbody>
+        <% for(customer in customers) { %>
+    <tr>
+    <td><%= customers[customer].id %></td>
+    <td><%= customers[customer].first_name %></td>
+    <td><%= customers[customer].suburb %></td>
+    </tr>
+    <% } %>
+    </tbody>
+    </table>
+    <script>
+    $(document).ready(function() {
+      $('#search').on('keyup', function() {
+        const searchTerm = $(this).val();
+    
+        const filteredCustomers = customers.filter(customer => {
+          return customer.first_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            customer.suburb.toLowerCase().includes(searchTerm.toLowerCase());
+        });
+        
+        $('#customers').html(ejs.render('customers', { customers: filteredCustomers }));
+      });
+    });
+    </script>
+</body>
+</html>

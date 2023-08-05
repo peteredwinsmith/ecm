@@ -12,66 +12,85 @@
 <div class="header">
 	<img src="rollcall-logo-white-rev-withtext.png" alt="Roll Call Logo" width="90" height="90" class="rounded hp">
 	<p class="text-white text-4xl">Roll Call BCM Demo</p>
-	<p class="text-green-700 text-4xl">Admin Console</p>
+	<p class="text-green-700 text-4xl"><%= dictionary.adminConsole %></p>
  
 </div>
 
 <div class="topnav">
-	<a href="https://peteredwinsmith.github.io/ecm/index.html">Home</a>
-	<a href="#">Admin Console</a>
-	<a href="#">Mobile Admin</a>
-	<a href="#">Mobile User</a>
+	<a href="/"><%= dictionary.home %></a>
+	<a href="/admin"><%= dictionary.adminConsole %></a>
+	<a href="/customer"><%= dictionary.mobileAdmin %></a>
+	<a href="#"><%= dictionary.mobileUser %></a>
 </div>
 
 <div class="row">
 	<div class="column side">
-		<h2>Section Menu</h2>
+		<h2 class="underline">Section Menu</h2>
 		<ul>
 			<li><a href="#">Document Templates</a></li>
 			<li><a href="#">Assets</a></li>
 			<li><a href="#">Scenario Templates</a></li>
 			<li><a href="#">Employees</a></li>
 			<li><a href="#">BCM Events</a></li>
-            <li><a href="cssForms.html">CSS Forms</a></li>
+      <li><a href="https://peteredwinsmith.github.io/ecm/cssForms.html"><%= dictionary.cssForms %></a></li>
+      <br></br>
+      <li><a class="text-red-500 text-bold uppercase">LANG: <%= langCode %></a></li>
 		</ul>
 	</div>
   
 	<div class="column right">
 
-	<p style="padding-bottom: 0.5em;" class="text-2xl font-bold">Admin Console</p>
+	<script src="https://peteredwinsmith.github.io/ecm/database.js"></script>
 
-	<p style="padding-bottom: 0.5em;" class="text-base text-red-500 italic" id="errmsg">Default message</p>
+  <p style = "margin-left: 720px;" class="text-lg font-bold"><%= dictionary.welcome %> <%= firstName %></p>
 
-	<script>
-        // Display form data validation message
-        const queryString = window.location.search;
-        console.log(queryString);
-        const urlParams = new URLSearchParams(queryString);
-        const msg = urlParams.get('cde');
-        console.log(msg);
-        var textMsg = "";
-        if (msg == null) {
-        // No message when screen first displayed
-        } if (msg == "0301") {
-        // Display message that logged in successfully
-        textMsg = "Logged in Successfully"; 
-	    } else {
-        // No message when screen first displayed
-        } 
-        document.getElementById("errmsg").innerHTML = textMsg;
-        console.log(textMsg);
-    </script>
+	<p style="padding-bottom: 0.5em;" class="text-2xl font-bold"><%= dictionary.adminConsole %></p>
 
-	<script>
-		let c = document.cookie.split(";").reduce( (ac, cv, i) => Object.assign(ac, {[cv.split('=')[0]]: cv.split('=')[1]}), {});
-		let x = document.cookie;
-		console.log("raw cookie", x);
-		console.log("login", c);
-	</script>
-
-<form action="http://localhost:3000" method="POST" enctype="application/x-www-form-urlencoded">
-    <input type="hidden" id="screenId" name="screenId" value="03-adc">
+<form name = "custSearch" action="/searchCustomer" method="POST" enctype="application/x-www-form-urlencoded">
+	<div style="display: flex;">
+	<input type="text" id="searchText" name="searchText" class="input-content-offset-10 ps-1 bg-gray-50 border border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-90 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+	<button type="submit" style = "margin-left: 10px;" class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-medium w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><%= dictionary.search %></button>
+  </div>
 </form>
+
+<form name = "custCreate" action="/adminConsole" method="POST" enctype="application/x-www-form-urlencoded">
+	<div class="flex justify-center">
+  </div>
+	<button type="submit" style = "margin-left: 780px;" class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"><%= dictionary.create %></button>
+</form>
+
+<p class="text-lg font-bold"><%= dictionary.customerList %></p>
+
+<div class="relative overflow-x-auto">
+  <table class="w-9/12 text-sm">
+      <thead class="text-xs text-left text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+          <tr>
+              <th scope="col" class="px-6 py-3">
+                <%= dictionary.id %>
+              </th>
+              <th scope="col" class="px-6 py-3">
+                <%= dictionary.firstName %>
+              </th>
+              <th scope="col" class="px-6 py-3">
+                <%= dictionary.suburb %>
+              </th>
+          </tr>
+      </thead>
+      <tbody>
+          <% for(customer in rows) { %>
+            <tr>
+              <td class="px-6 py-4 text-left text-gray-500 dark:text-gray-400 bg-white border-b dark:bg-gray-800 dark:border-gray-700"><%= rows[customer].id %></td>
+              <td class="px-6 py-4 text-left text-gray-500 dark:text-gray-400 bg-white border-b dark:bg-gray-800 dark:border-gray-700"><%= rows[customer].first_name.substring(0,20)%></td>
+              <td class="px-6 py-4 text-gray-500 dark:text-gray-400 text-left bg-white border-b dark:bg-gray-800 dark:border-gray-700"><%= rows[customer].suburb %></td>
+			        <td class="px-2 py-4"></td>
+              <td class="underline"><a href="/edit/<%= rows[customer].id %>"><%= dictionary.edit %></a></td>
+			        <td class="px-2 py-4"></td>
+              <td class="underline"><a href="/delete/<%= rows[customer].id %>"><%= dictionary.delete %></a></td>
+            </tr>
+          <% } %>
+      </tbody>
+  </table>
+</div>
 
 </div>
   

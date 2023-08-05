@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>RC BCM Demo</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="style.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="header">
+	<img src="rollcall-logo-white-rev-withtext.png" alt="Roll Call Logo" width="90" height="90" class="rounded hp">
+	<p class="text-white text-4xl">Roll Call BCM Demo</p>
+	<p class="text-green-700 text-4xl">Admin Console</p>
+ 
+</div>
+
+<div class="topnav">
+	<a href="/">Home</a>
+	<a href="/admin">Admin Console</a>
+	<a href="#">Mobile Admin</a>
+	<a href="#">Mobile User</a>
+</div>
+
+<div class="row">
+	<div class="column side">
+		<h2>Section Menu</h2>
+		<ul>
+			<li><a href="#">Document Templates</a></li>
+			<li><a href="#">Assets</a></li>
+			<li><a href="#">Scenario Templates</a></li>
+			<li><a href="#">Employees</a></li>
+			<li><a href="#">BCM Events</a></li>
+            <li><a href="cssForms.html">CSS Forms</a></li>
+			<br></br>
+			<li><a class="text-red-500 text-bold uppercase">LANG: <%= langCode %></a></li>
+		</ul>
+	</div>
+  
+	<div class="column right">
+
+    <script src="https://peteredwinsmith.github.io/ecm/database.js"></script>
+
+	<p style = "margin-left: 800px;" class="text-lg test-bold"><%= dictionary.welcome %> <%= firstName %></p>
+
+	<p style="padding-bottom: 0.5em;" class="text-2xl font-bold"><%= dictionary.newCustomer %></p>
+
+	<p style="padding-bottom: 0.5em;" class="text-base text-red-500 italic"><%= displayMessage %></p>
+
+	<script>
+        setCookie("screenId", "04-cuc");
+	    console.log("screen ID", getCookie("screenId"));
+	    console.log("first name", getCookie("firstname"));
+        console.log("suburb", getCookie("suburb"));
+	    const msg = getCookie("errorCode");
+	    console.log("Error code", msg);
+        var textMsg = "";
+
+        if (getCookie("firstname") === null) {
+  	    // The form field element does not exist yet
+	    } else {
+	    //	document.getElementById("firstname").value = getCookie("firstname"); 
+	    };
+
+        if (msg == null) {
+        // No message when screen first displayed
+        } else if (msg == "0401") {
+        // Display message that user needs enter new customer details below
+        textMsg = "Enter new Customer details below"; 
+        } else if (msg == "0402") {
+        // Display message that First Name & Suburb must be entered
+        textMsg = "Error: Both First Name & Suburb must be input"; 
+        } else {
+        // blank
+		};
+        document.getElementById("errmsg").innerHTML = textMsg;
+        console.log(textMsg);
+    </script>
+
+<form action="/addcustomer" method="POST" enctype="application/x-www-form-urlencoded">
+    <div class="mb-6">
+    <label for="firstname" size=30 class="block mb-2 text-medium font-medium font-bold text-gray-900 dark:text-white"><%= dictionary.firstName %></label>
+    <input type="text" id="firstname" name="firstname" class="input-content-offset-10 ps-1 bg-gray-50 border border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-90 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="<%= newName %>">
+    </div>
+    <div class="mb-6">
+    <label for="suburb" size=20 class="block mb-2 text-medium font-medium font-bold text-gray-900 dark:text-white"><%= dictionary.suburb %></label>
+    <input type="suburb" id="suburb" name="suburb" class="input-content-offset-10 ps-1 bg-gray-50 border border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-90 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="<%= newSuburb %>">
+    </div>
+    <input type="hidden" id="screenId" name="screenId" value="04-cuc">
+    <button type="submit" class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-medium w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+</form>
+
+</div>
+  
+</div>
+
+<footer>
+	<div class="footer">
+	</div>
+</footer>
+
+</body>
+</html>
