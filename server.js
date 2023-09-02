@@ -6,12 +6,19 @@ global.displayMessage = "";
 global.usernameInput = "";
 global.newName = "";
 global.newSuburb = "";
+global.itemsPerPage = 7;
+global.currentPage = 1;
+global.nextPage = 2;
+global.offset = (currentPage - 1) * itemsPerPage;
+global.totalPages = 1;
+global.searchText = "";
+global.fnSearch = "";
+global.suSearch = "";
 
 // Google's phone number validation service
 
 import libphonenumber from 'google-libphonenumber';
 const phoneUtil = libphonenumber.PhoneNumberUtil.getInstance();
-const countries = libphonenumber.getCountries();
 
 // Parse number with country code and keep raw input.
 const phoneNumber = phoneUtil.parseAndKeepRawInput('0493 596 935', 'AU');
@@ -27,6 +34,9 @@ console.log(phoneUtil.isValidNumber(phoneNumber));
 
 import mysql from 'mysql2'
 
+import url from 'url'
+const URLSearchParams = url.URLSearchParams;
+
 import dotenv from 'dotenv'
 dotenv.config();
 
@@ -38,7 +48,14 @@ var con = mysql.createConnection({
   insecureAuth: false
 });
 
-// const express = require('express');
+import sum from './helper.js';
+console.log(sum(10, 10));
+
+import calcTest3 from './helper2.js';
+console.log(calcTest3(10));
+
+import { customerList } from './getCustomers.js';
+
 import express from 'express';
 const app = express();
 import bodyParser from 'body-parser';
@@ -70,9 +87,42 @@ import Fs from '@supercharge/fs'
 const myObj = await Fs.readJson('translation.json')
 // console.log(myObj);
 
+const data = [
+  { num: 0.28, status: true },
+  { num: 0.21, status: false },
+  { num: 0.2, status: true },
+  { num: 0.19, status: false },
+  { num: 0.24, status: true },
+  { num: 0.23, status: false },
+  { num: 0.29, status: false },
+  { num: 0.25, status: true },
+];
+
+const result = data.sort((a, b) => b.status - a.status || a.num - b.num);
+//console.log(result);
+
 const x = 5;
 let testValue = pkg.calcTest2(x);
 console.log(testValue);
+
+function parseParam(oldParams, newParams = {}, field = '') {
+  for (const key in oldParams) {
+      if (oldParams[key] !== null) {
+          let field3 = field.length > 0 ? field + '[' + key + ']' : key ;
+          switch (typeof oldParams[key]) {
+              case 'object':         
+                  let object = parseParam(oldParams[key], newParams, field3);
+                  newParams = Object.assign(newParams, object);  
+                  break;
+              case 'string':
+              case 'number':                        
+                  newParams[field3] = oldParams[key];
+                  break;
+          }
+      }
+  }
+  return newParams;
+}
 
 app.get('/', (req, res) => {
   res.render("index.ejs")
@@ -85,13 +135,101 @@ app.get('/login', (req, res) => {
 });
 
 app.get('/adminConsole', (req, res) => {
+  displayMessage = "";
+  var currentPage = Math.ceil(req.query.page) || 1;
+  var nextPage = currentPage + 1;
+  // console.log("current page", currentPage);
+  // console.log("next page", nextPage);
+  var offset = (currentPage - 1) * itemsPerPage;
+  const queryString = 'SELECT * FROM customer LIMIT ? OFFSET ?';
+  con.query(queryString, [itemsPerPage, offset], (err, rows) => {
+    if (err) throw err;
+
+  // Count total customers to calculate number of pages
+  con.query('SELECT COUNT(*) AS total FROM customer', (err, result) => {
+    if (err) throw err;
+
+  const totalCustomers = result[0].total;
+  // console.log("Total Cust", totalCustomers);
+  var totalPages = Math.ceil(totalCustomers / itemsPerPage);
+  // console.log("Total Pages", totalPages);
   res.render("adminConsole.ejs", {
-    rows, dictionary, langCode, firstName, displayMessage
- });
+    rows, dictionary, langCode, firstName, displayMessage, currentPage, nextPage, totalPages
+  });
+  });
+  });
 });
 
+app.get('/custSearch', (req, res) => {
+  var urlString = new URLSearchParams(req.url);
+  //console.log(urlString);
+  const searchField = urlString.get('sch');
+  console.log("searchfield", searchField);
+  var fnSearch = "%" + searchField + "%";
+  var suSearch = "%" + searchField + "%";
+  var searchText = searchField;
+  //console.log("fnsearch", fnSearch);
+  displayMessage = "";
+  var currentPage = Math.ceil(req.query.page) || 1;
+  var nextPage = currentPage + 1;
+  //console.log("current page", currentPage);
+  // console.log("next page", nextPage);
+  var offset = (currentPage - 1) * itemsPerPage;
+  var searchString = 'SELECT * FROM customer where first_name like ? or suburb like ? LIMIT ? OFFSET ?';
+  con.query(searchString, [fnSearch, suSearch, itemsPerPage, offset], (err, rows) => {
+    if (err) throw err;
+
+  // Count total customers to calculate number of pages
+  var sql = 'SELECT COUNT(*) AS total FROM customer  where first_name like ? or suburb like ?';
+  con.query(sql, [fnSearch, suSearch], (err, result) => {
+    if (err) throw err;
+
+  //console.log("rows", rows);
+  const totalCustomers = result[0].total;
+  // console.log("Total Cust", totalCustomers);
+  var totalPages = Math.ceil(totalCustomers / itemsPerPage);
+  // console.log("Total Pages", totalPages);
+  res.render("custSearch.ejs", {
+    rows, dictionary, langCode, firstName, displayMessage, currentPage, nextPage, totalPages, searchText
+  });
+  });
+  });
+});
+
+app.get('/sortCustomers', (req, res) => {
+  var urlString = new URLSearchParams(req.url);
+  console.log(urlString);
+  const sortField = urlString.get('/sortCustomers?sort');
+  console.log("sortfield", sortField);
+  displayMessage = "";
+    
+  const SQL = 'SELECT * FROM customer';
+  con.query(SQL, (err, sortrows) => {
+    if (err) throw err;
+  // console.log("Rows", rows);
+
+  if (sortField == "first_name") {
+    var rows = sortrows.sort(function(a, b) {
+      return a.first_name.localeCompare(b.first_name)
+    });
+  } else {
+    var rows = sortrows.sort(function(a, b) {
+      return a.suburb.localeCompare(b.suburb)
+    });
+  };
+
+  console.log("Sortrows", rows);
+
+  res.render("sortCustomer.ejs", {
+    rows, dictionary, langCode, firstName, displayMessage
+  });
+  });
+  });
+
 app.get('/addcustomer', (req, res) => {
-  res.render("addCustomer.ejs")
+  res.render("addCustomer.ejs", {
+    dictionary, langCode, firstName, displayMessage, newName, newSuburb
+  });
 });
 
 // Update or edit a customer record
@@ -163,7 +301,6 @@ app.post('/', (req, res) => {
       httpOnly: false });
       res.cookie('compId', companyId, { expires: new Date(Date.now() + 5000), secure: false,
         httpOnly: false });
-      // res.redirect(302,"/");
       res.render("index.ejs");
     } else {
       // con.connect(function(err) {
@@ -211,7 +348,7 @@ app.post('/login', (req, res) => {
     // Check if username & password are valid
     var sql = 'SELECT * FROM user WHERE username = ' + mysql.escape(username) + ' AND password = ' + mysql.escape(password);
     console.log(sql);
-    con.query(sql, function (err, result) {
+    con.query(sql, async function (err, result) {
       if (err) throw err;
       console.log(result);
       var loginInvalid = false;
@@ -243,19 +380,24 @@ app.post('/login', (req, res) => {
             // console.log(dictionary);
           });
           displayMessage = dictionary.msg0301;
-          res.cookie('errorCode', "0301", { expires: new Date(Date.now() + 5000), secure: false,
-          httpOnly: false });
-          var sql = 'SELECT * FROM customer';
-          console.log(sql);
-          // console.log("username", username);
-          con.query(sql, (err, rows, fields) => {
-          if (err) throw err;
-          // console.log(rows);
+          // let displayList = await customerList(res, dictionary, langCode, firstName, displayMessage);
+          console.log("current page", currentPage);
+          console.log("next page", nextPage);
+          const queryString = 'SELECT * FROM customer LIMIT ? OFFSET ?';
+          con.query(queryString, [itemsPerPage, offset], (err, rows) => {
+            if (err) throw err;
+
+          // Count total customers to calculate number of pages
+          con.query('SELECT COUNT(*) AS total FROM customer', (err, result) => {
+            if (err) throw err;
+            const totalCustomers = result[0].total;
+            var totalPages = Math.ceil(totalCustomers / itemsPerPage);
            res.render("adminConsole.ejs", {
-             rows, dictionary, langCode, firstName, displayMessage
+             rows, dictionary, langCode, firstName, displayMessage, currentPage, nextPage, totalPages
            });
           });
-        };
+        });
+      };
       });       
   }; 
 
@@ -269,7 +411,7 @@ app.post('/adminConsole', (req, res) => {
   });
 });
 
-app.post('/addcustomer', (req, res) => {
+app.post('/addcustomer', async (req, res) => {
   // add customer screen
   const firstname = req.body.firstname;
   const suburb = req.body.suburb;
@@ -283,18 +425,26 @@ app.post('/addcustomer', (req, res) => {
     });
   } else { 
     // add customer to database
-    sql = 'INSERT INTO customer (first_name, suburb) VALUES (' + mysql.escape(firstname) + ', ' + mysql.escape(suburb) + ')';
+    var sql = 'INSERT INTO customer (first_name, suburb) VALUES (' + mysql.escape(firstname) + ', ' + mysql.escape(suburb) + ')';
     console.log(sql);
     con.query(sql, function (err, result) {
       if (err) throw err;
+      con.commit();
     });
-    var sql = 'SELECT * FROM customer';
-    con.query(sql, (err, rows, fields) => {
+    
+    displayMessage = dictionary.msg0302;
+    //const displayList = await customerList(res, dictionary, langCode, firstName, displayMessage);
+    const queryString = 'SELECT * FROM customer LIMIT ? OFFSET ?';
+    con.query(queryString, [itemsPerPage, offset], (err, rows) => {
       if (err) throw err;
-      // console.log(rows);
-      displayMessage = dictionary.msg0302;
-      res.render("adminConsole.ejs", {
-      rows, dictionary, langCode, firstName, displayMessage
+      // Count total customers to calculate number of pages
+      con.query('SELECT COUNT(*) AS total FROM customer', (err, result) => {
+        if (err) throw err;
+          const totalCustomers = result[0].total;
+          var totalPages = Math.ceil(totalCustomers / itemsPerPage);
+          res.render("adminConsole.ejs", {
+             rows, dictionary, langCode, firstName, displayMessage, currentPage, nextPage, totalPages
+          });
       });
     });
   };
@@ -310,18 +460,23 @@ app.post('/editCustomer', (req, res) => {
   console.log(sql);
   con.query(sql, function (err, result) {
     if (err) throw err;
+  //con.end();
   });
 
-  var sql = 'SELECT * FROM customer';
-  con.query(sql, (err, rows, fields) => {
+  displayMessage = dictionary.msg0303;
+  const queryString = 'SELECT * FROM customer LIMIT ? OFFSET ?';
+  con.query(queryString, [itemsPerPage, offset], (err, rows) => {
     if (err) throw err;
-    displayMessage = dictionary.msg0303;
-    // res.cookie('errorCode', "0303", { expires: new Date(Date.now() + 5000), secure: false,
-    // httpOnly: false });
-    res.render("adminConsole.ejs", {
-    rows, dictionary, langCode, firstName, displayMessage
+    // Count total customers to calculate number of pages
+    con.query('SELECT COUNT(*) AS total FROM customer', (err, result) => {
+      if (err) throw err;
+        const totalCustomers = result[0].total;
+        var totalPages = Math.ceil(totalCustomers / itemsPerPage);
+        res.render("adminConsole.ejs", {
+           rows, dictionary, langCode, firstName, displayMessage, currentPage, nextPage, totalPages
+        });
     });
-});
+  });
 });
 
 app.post('/deleteCustomer', (req, res) => {
@@ -330,41 +485,77 @@ app.post('/deleteCustomer', (req, res) => {
   console.log(sql);
   con.query(sql, function (err, result) {
     if (err) throw err;
+  //con.end();
   });
 
-  var sql = 'SELECT * FROM customer';
-  con.query(sql, (err, rows, fields) => {
+  displayMessage = dictionary.msg0304;
+  const queryString = 'SELECT * FROM customer LIMIT ? OFFSET ?';
+  con.query(queryString, [itemsPerPage, offset], (err, rows) => {
     if (err) throw err;
-    displayMessage = dictionary.msg0304;
-    // res.cookie('errorCode', "0304", { expires: new Date(Date.now() + 5000), secure: false,
-    // httpOnly: false });
-    res.render("adminConsole.ejs", {
-    rows, dictionary, langCode, firstName, displayMessage
+    // Count total customers to calculate number of pages
+    con.query('SELECT COUNT(*) AS total FROM customer', (err, result) => {
+      if (err) throw err;
+        const totalCustomers = result[0].total;
+        var totalPages = Math.ceil(totalCustomers / itemsPerPage);
+        res.render("adminConsole.ejs", {
+           rows, dictionary, langCode, firstName, displayMessage, currentPage, nextPage, totalPages
+        });
     });
-});
+  });
 });
 
 app.post('/searchCustomer', (req, res) => {
   // customer list search results
-  const searchText = req.body.searchText;
+  var searchText = req.body.searchText;
   console.log("Search Text", searchText);
-  var sql = 'SELECT * FROM customer';
-  con.query(sql, (err, rows, fields) => {
-    if (err) throw err;
-    displayMessage = dictionary.msg0305;
-    // res.cookie('errorCode', "0305", { expires: new Date(Date.now() + 5000), secure: false,
-    // httpOnly: false });
-  
-    let filteredCustomers = rows.filter((customer) => {
-      return customer.first_name.toLowerCase().includes(searchText.toLowerCase()) || customer.suburb.toLowerCase().includes(searchText.toLowerCase());
+  // If search is blank return to full customer list
+  if (searchText == "") {
+    var currentPage = 1;
+    var nextPage = currentPage + 1;
+    const queryString = 'SELECT * FROM customer LIMIT ? OFFSET ?';
+    con.query(queryString, [itemsPerPage, offset], (err, rows) => {
+      if (err) throw err;
+      // Count total customers to calculate number of pages
+      con.query('SELECT COUNT(*) AS total FROM customer', (err, result) => {
+        if (err) throw err;
+          const totalCustomers = result[0].total;
+          var totalPages = Math.ceil(totalCustomers / itemsPerPage);
+          res.render("adminConsole.ejs", {
+             rows, dictionary, langCode, firstName, displayMessage, currentPage, nextPage, totalPages
+          });
+      });
     });
-    console.log("Filtered list", filteredCustomers);
-    rows = filteredCustomers;
+  } else {
+    // example of filtering a javascript object
+    // let filteredCustomers = rows.filter((customer) => {
+    //    return customer.first_name.toLowerCase().includes(searchText.toLowerCase()) || customer.suburb.toLowerCase().includes(searchText.toLowerCase());
+    //  });
+    // console.log("Filtered list", filteredCustomers);
+    //  rows = filteredCustomers;
+    var fnSearch = "%" + searchText + "%";
+    var suSearch = "%" + searchText + "%";
+    console.log("fnsearch", fnSearch);
+    console.log("susearch", suSearch);
+    displayMessage = dictionary.msg0305;
+    // Display partial customer list based on search criteria with navigation menu
+    var currentPage = 1;
+    var nextPage = currentPage + 1;
+    const queryString = 'SELECT * FROM customer where first_name like ? or suburb like ? LIMIT ? OFFSET ?';
+    con.query(queryString, [fnSearch, suSearch, itemsPerPage, offset], (err, rows) => {
+    if (err) throw err;
 
-    res.render("adminConsole.ejs", {
-    rows, dictionary, langCode, firstName, displayMessage
+    // Count total customers to calculate number of pages
+    var sql = 'SELECT COUNT(*) AS total FROM customer  where first_name like ? or suburb like ?';
+    con.query(sql, [fnSearch, suSearch], (err, result) => {
+      if (err) throw err;
+      const totalCustomers = result[0].total;
+      var totalPages = Math.ceil(totalCustomers / itemsPerPage);
+      res.render("custSearch.ejs", {
+       rows, dictionary, langCode, firstName, displayMessage, currentPage, nextPage, totalPages, searchText
+      });
     });
   });
+  }
 });
 
 const port = 3000;
