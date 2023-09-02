@@ -47,35 +47,35 @@
 
   <p style="padding-top:0.75em;padding-bottom:0.5em;" class="text-base text-red-500 italic"><%= displayMessage %></p>
 
-<form name = "custSearch" action="/searchCustomer" method="POST" enctype="application/x-www-form-urlencoded">
-	<div style="display: flex;float:left">
-	<input type="text" id="searchText" name="searchText" class="input-content-offset-10 ps-1 bg-gray-50 border border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-90 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+  <form name = "custSearch" action="/searchCustomer" method="POST" enctype="application/x-www-form-urlencoded">
+    <div style="display: flex;float:left">
+    <input type="text" id="searchText" name="searchText"  value = "<%= searchText %>" class="input-content-offset-10 ps-1 bg-gray-50 border border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-90 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+    </div>
+    <div class="regularbutton" style = "display: flex;float:left;margin-left: 10px;">
+      <button type="submit"><%= dictionary.search %></button>
+    </div>
+  </form>
+  
+  <form name = "custCreate" action="/adminConsole" method="POST" enctype="application/x-www-form-urlencoded">
+    <div class="createbutton" style = "display: flex;float:left;margin-left: 450px;">
+    <button type="submit"><%= dictionary.create %></button>
+    </div>
+  </form>
+  
+  <p></p>
+  
+  <div style="padding-top:4em;padding-bottom:1em">
+    <table class="text-sm">
+        <thead></thead>
+        <tbody>
+            <tr>
+                <td class="underline" style = "position:relative; left:20px;"><a href="/adminConsole"><%= dictionary.id %></a></td>
+                <td class="underline"  style = "position:relative; left:135px;"><a href="/sortCustomers?sort=first_name"><%= dictionary.firstName %></a></td>
+                <td class="underline" style = "position:relative; left:280px;"><a href="/sortCustomers?sort=suburb"><%= dictionary.suburb %></a></td>
+            </tr>
+          </tbody>
+    </table>
   </div>
-  <div class="regularbutton" style = "display: flex;float:left;margin-left: 10px;">
-    <button type="submit"><%= dictionary.search %></button>
-  </div>
-</form>
-
-<form name = "custCreate" action="/adminConsole" method="POST" enctype="application/x-www-form-urlencoded">
-	<div class="createbutton" style = "display: flex;float:left;margin-left: 450px;">
-	<button type="submit"><%= dictionary.create %></button>
-  </div>
-</form>
-
-<p></p>
-
-<div style="padding-top:4em;padding-bottom:1em">
-  <table class="text-sm">
-      <thead></thead>
-      <tbody>
-          <tr>
-              <td class="underline" style = "position:relative; left:20px;"><a href="/adminConsole"><%= dictionary.id %></a></td>
-              <td class="underline"  style = "position:relative; left:135px;"><a href="/sortCustomers?sort=first_name"><%= dictionary.firstName %></a></td>
-              <td class="underline" style = "position:relative; left:280px;"><a href="/sortCustomers?sort=suburb"><%= dictionary.suburb %></a></td>
-          </tr>
-        </tbody>
-  </table>
-</div>
 
 <div class="relative overflow-x-auto">
   <table class="w-9/12 text-sm">
@@ -83,9 +83,9 @@
         <tbody>
           <% for(customer in rows) { %>
             <tr class="bg-gray-50">
-              <td class="px-5 py-3 text-left text-gray-500 dark:text-gray-400 border-b dark:border-gray-700"><%= rows[customer].id %></td>
-              <td class="px-5 py-3 text-left text-gray-500 dark:text-gray-400 border-b dark:border-gray-700"><%= rows[customer].first_name %></td>
-              <td class="px-5 py-3 text-left text-gray-500 dark:text-gray-400 border-b dark:border-gray-700"><%= rows[customer].suburb %></td>
+              <td class="px-5 py-3 text-left text-gray-500 dark:text-gray-400 bg-white border-b dark:bg-gray-800 dark:border-gray-700"><%= rows[customer].id %></td>
+              <td class="px-5 py-3 text-left text-gray-500 dark:text-gray-400 bg-white border-b dark:bg-gray-800 dark:border-gray-700"><%= rows[customer].first_name %></td>
+              <td class="px-5 py-3 text-gray-500 dark:text-gray-400 text-left bg-white border-b dark:bg-gray-800 dark:border-gray-700"><%= rows[customer].suburb %></td>
 			        <td class="px-2 py-4"></td>
               <td class="underline"><a href="/edit/<%= rows[customer].id %>"><%= dictionary.edit %></a></td>
 			        <td class="px-2 py-4"></td>
@@ -99,20 +99,19 @@
 </div>
   
 </div>
-
 <footer>
 	<div class="footer">
     <div class="listnav">
       <% if (currentPage > 1) { %>
-        <a href="/adminConsole?page=<%= currentPage - 1 %>"><%= dictionary.prev %></a>
+        <a href="/custSearch?page=<%= currentPage - 1 %>&sch=<%= searchText %>"><%= dictionary.prev %></a>
       <% } %>
     
       <% for (let i = 1; i <= totalPages; i++) { %>
-        <a href="/adminConsole?page=<%= i %>"><%= i %></a>
+        <a href="/custSearch?page=<%= i %>&sch=<%= searchText %>"><%= i %></a>
       <% } %>
     
       <% if (currentPage < totalPages) { %>
-        <a href="/adminConsole?page=<%= currentPage + 1 %>"><%= dictionary.next %></a>
+        <a href="/custSearch?page=<%= currentPage + 1 %>&sch=<%= searchText %>"><%= dictionary.next %></a>
       <% } %>
     </div>
 	</div>

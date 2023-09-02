@@ -17,10 +17,10 @@
 </div>
 
 <div class="topnav">
-	<a href="/">Home</a>
-	<a href="/admin">Admin Console</a>
-	<a href="#">Mobile Admin</a>
-	<a href="#">Mobile User</a>
+	<a href="/"><%= dictionary.home %></a>
+	<a href="/adminConsole"><%= dictionary.adminConsole %></a>
+	<a href="#"><%= dictionary.mobileAdmin %></a>
+	<a href="#"><%= dictionary.mobileUser %></a>
 </div>
 
 <div class="row">
@@ -32,7 +32,6 @@
 			<li><a href="#">Scenario Templates</a></li>
 			<li><a href="#">Employees</a></li>
 			<li><a href="#">BCM Events</a></li>
-            <li><a href="cssForms.html">CSS Forms</a></li>
 			<br></br>
 			<li><a class="text-red-500 text-bold uppercase">LANG: <%= langCode %></a></li>
 		</ul>
@@ -42,26 +41,29 @@
 
     <script src="https://peteredwinsmith.github.io/ecm/database.js"></script>
 
-	<p style = "margin-left: 800px;" class="text-lg test-bold"><%= dictionary.welcome %> <%= firstName %></p>
+	<p style="margin:0;display:inline;float:left" class="text-2xl font-bold"><%= dictionary.editCustomer %></p>
 
-	<p style="padding-bottom: 0.5em;" class="text-2xl font-bold"><%= dictionary.editCustomer %></p>
+	<p style = "margin:0;display:inline;margin-left:550px;padding-bottom:2em;" class="text-lg font-bold"><%= dictionary.welcome %> <%= firstName %></p>
 
-	<script>
-        setCookie("screenId", "05-cue");
-	    console.log("screen ID", getCookie("screenId"));
-    </script>
+	<br></br>
 
 <form action="/editCustomer" method="POST" enctype="application/x-www-form-urlencoded">
-    <div class="mb-6">
-    <label for="firstname" size=30 class="block mb-2 text-medium font-medium font-bold text-gray-900 dark:text-white"><%= dictionary.firstName %></label>
+    <div class="fieldlabel">
+		<label for="firstname" size=30><%= dictionary.firstName %></label>
+	</div>
+	<div class="mb-6">
     <input type="text" id="firstname" name="firstname" class="input-content-offset-10 ps-1 bg-gray-50 border border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-90 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="<%= rows[0].first_name %>">
     </div>
+	<div class="fieldlabel">
+		<label for="suburb" size=20><%= dictionary.suburb %></label>
+	</div>
     <div class="mb-6">
-    <label for="suburb" size=20 class="block mb-2 text-medium font-medium font-bold text-gray-900 dark:text-white"><%= dictionary.suburb %></label>
     <input type="suburb" id="suburb" name="suburb" class="input-content-offset-10 ps-1 bg-gray-50 border border-gray-400 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-90 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="<%= rows[0].suburb %>">
-    </div>
     <input type="hidden" id="recordId" name="recordId" value="<%= rows[0].id %>">
-    <button type="submit" class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-medium w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"><%= dictionary.save %></button>
+	</div>
+	<div class="regularbutton">
+		<button type="submit"><%= dictionary.save %></button>
+	</div>
 </form>
 
 </div>
