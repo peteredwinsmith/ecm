@@ -125,6 +125,27 @@ body {
   }
 }
 
+.pagetitle {
+  padding-bottom: 0.5rem; /* 8px */
+  font-size: 1.5rem; /* 24px */
+  line-height: 2rem; /* 32px */
+  font-weight: 700;
+}  
+
+.welcomemsg {
+  font-size: 1.125rem; /* 18px */
+  line-height: 1.75rem; /* 28px */
+  font-weight: 700;
+}
+
+.messageline {
+  padding-bottom: 0.5rem; /* 8px */
+  font-size: 1rem; /* 16px */
+  line-height: 1.5rem; /* 24px */
+  color: #ef4444;
+  font-style: italic;
+}
+  
 .fieldlabel {
   margin-bottom: 0.5rem; /* 8px */
   font-size: 1rem; /* 16px */
@@ -132,6 +153,21 @@ body {
   font-weight: 500;
   color: #111827;
 }
+
+.textfield {
+  padding-inline-start: 0.25rem; /* 4px */
+  background-color: #f9fafb;
+  border-width: 1px;
+  border-color: #9CA3AF;
+  color: #111827;
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.25rem; /* 20px */
+  border-radius: 0.5rem; /* 8px */
+  outline-color: #3b82f6;
+  width: 12rem; /* 320px */
+  padding: 0.625rem; /* 10px */
+  }
+  
   
 .regularbutton {
   width: 6rem;
