@@ -31,7 +31,6 @@ console.log(phoneNumber.getNationalNumber());
 console.log(phoneUtil.isValidNumber(phoneNumber));
 // => true
 
-
 import mysql from 'mysql2'
 
 import url from 'url'
@@ -47,6 +46,23 @@ var con = mysql.createConnection({
   database: process.env.MYSQL_DATABASE,
   insecureAuth: false
 });
+
+// import functions for Get & Post
+import postIndex from './postIndex.js';
+import postLogin from './postLogin.js';
+import postAdminConsole from './postAdminConsole.js';
+import postAddCustomer from './postAddCustomer.js';
+import postEditCustomer from './postEditCustomer.js';
+import postDeleteCustomer from './postDeleteCustomer.js';
+import postSearchCustomer from './postSearchCustomer.js';
+import getIndex from './getIndex.js';
+import getLogin from './getLogin.js';
+import getAdminConsole from './getAdminConsole.js';
+import getAddCustomer from './getAddCustomer.js';
+import getEditCustomer from './getEditCustomer.js';
+import getDeleteCustomer from './getDeleteCustomer.js';
+import getSearchCustomer from './getSearchCustomer.js';
+import getSortCustomer from './getSortCustomer.js';
 
 import sum from './helper.js';
 console.log(sum(10, 10));
@@ -89,13 +105,7 @@ const myObj = await Fs.readJson('translation.json')
 
 const data = [
   { num: 0.28, status: true },
-  { num: 0.21, status: false },
-  { num: 0.2, status: true },
-  { num: 0.19, status: false },
-  { num: 0.24, status: true },
-  { num: 0.23, status: false },
-  { num: 0.29, status: false },
-  { num: 0.25, status: true },
+  { num: 0.21, status: false }
 ];
 
 const result = data.sort((a, b) => b.status - a.status || a.num - b.num);
@@ -124,438 +134,68 @@ function parseParam(oldParams, newParams = {}, field = '') {
   return newParams;
 }
 
+// App Get functions
 app.get('/', (req, res) => {
-  res.render("index.ejs")
+  console.log(getIndex(req, res));
 });
 
 app.get('/login', (req, res) => {
-  res.render("login.ejs", {
-    usernameInput, displayMessage
-  });
+  console.log(getLogin(req, res));
 });
 
 app.get('/adminConsole', (req, res) => {
-  displayMessage = "";
-  var currentPage = Math.ceil(req.query.page) || 1;
-  var nextPage = currentPage + 1;
-  // console.log("current page", currentPage);
-  // console.log("next page", nextPage);
-  var offset = (currentPage - 1) * itemsPerPage;
-  const queryString = 'SELECT * FROM customer LIMIT ? OFFSET ?';
-  con.query(queryString, [itemsPerPage, offset], (err, rows) => {
-    if (err) throw err;
-
-  // Count total customers to calculate number of pages
-  con.query('SELECT COUNT(*) AS total FROM customer', (err, result) => {
-    if (err) throw err;
-
-  const totalCustomers = result[0].total;
-  // console.log("Total Cust", totalCustomers);
-  var totalPages = Math.ceil(totalCustomers / itemsPerPage);
-  // console.log("Total Pages", totalPages);
-  res.render("adminConsole.ejs", {
-    rows, dictionary, langCode, firstName, displayMessage, currentPage, nextPage, totalPages
-  });
-  });
-  });
+  console.log(getAdminConsole(req, res));
 });
 
 app.get('/custSearch', (req, res) => {
-  var urlString = new URLSearchParams(req.url);
-  //console.log(urlString);
-  const searchField = urlString.get('sch');
-  console.log("searchfield", searchField);
-  var fnSearch = "%" + searchField + "%";
-  var suSearch = "%" + searchField + "%";
-  var searchText = searchField;
-  //console.log("fnsearch", fnSearch);
-  displayMessage = "";
-  var currentPage = Math.ceil(req.query.page) || 1;
-  var nextPage = currentPage + 1;
-  //console.log("current page", currentPage);
-  // console.log("next page", nextPage);
-  var offset = (currentPage - 1) * itemsPerPage;
-  var searchString = 'SELECT * FROM customer where first_name like ? or suburb like ? LIMIT ? OFFSET ?';
-  con.query(searchString, [fnSearch, suSearch, itemsPerPage, offset], (err, rows) => {
-    if (err) throw err;
-
-  // Count total customers to calculate number of pages
-  var sql = 'SELECT COUNT(*) AS total FROM customer  where first_name like ? or suburb like ?';
-  con.query(sql, [fnSearch, suSearch], (err, result) => {
-    if (err) throw err;
-
-  //console.log("rows", rows);
-  const totalCustomers = result[0].total;
-  // console.log("Total Cust", totalCustomers);
-  var totalPages = Math.ceil(totalCustomers / itemsPerPage);
-  // console.log("Total Pages", totalPages);
-  res.render("custSearch.ejs", {
-    rows, dictionary, langCode, firstName, displayMessage, currentPage, nextPage, totalPages, searchText
-  });
-  });
-  });
+  console.log(getSearchCustomer(req, res));
 });
 
 app.get('/sortCustomers', (req, res) => {
-  var urlString = new URLSearchParams(req.url);
-  console.log(urlString);
-  const sortField = urlString.get('/sortCustomers?sort');
-  console.log("sortfield", sortField);
-  displayMessage = "";
-    
-  const SQL = 'SELECT * FROM customer';
-  con.query(SQL, (err, sortrows) => {
-    if (err) throw err;
-  // console.log("Rows", rows);
-
-  if (sortField == "first_name") {
-    var rows = sortrows.sort(function(a, b) {
-      return a.first_name.localeCompare(b.first_name)
-    });
-  } else {
-    var rows = sortrows.sort(function(a, b) {
-      return a.suburb.localeCompare(b.suburb)
-    });
-  };
-
-  console.log("Sortrows", rows);
-
-  res.render("sortCustomer.ejs", {
-    rows, dictionary, langCode, firstName, displayMessage
-  });
-  });
+  console.log(getSortCustomer(req, res));
   });
 
 app.get('/addcustomer', (req, res) => {
-  res.render("addCustomer.ejs", {
-    dictionary, langCode, firstName, displayMessage, newName, newSuburb
-  });
+  console.log(getAddCustomer(req, res));
 });
 
 // Update or edit a customer record
 app.get("/edit/:id", (req, res) => {
-  
-  if (req.params.id == "favicon.ico") {
-    var id = '1';
-  } else {
-    var id = req.params.id;
-  };
-  
-  console.log("ID for edit", id)
-
-  // Get the customer record from MySQL
-  var sql = 'SELECT * FROM customer WHERE id = ' + mysql.escape(id);
-  console.log("SQL for edit", sql)
-
-  con.query(sql, (err, rows, fields) => {
-    if (err) {
-      console.log(err);
-      res.status(500).send("Error getting customer record");
-    }
-    // Display the customer record in HTML
-    res.render("editCustomer.ejs", { rows, dictionary, langCode, firstName, displayMessage });
-  });
+  console.log(getEditCustomer(req, res));
 });
 
 // Delete a customer record
 app.get("/delete/:id", (req, res) => {
-  
-  if (req.params.id == "favicon.ico") {
-    var id = '1';
-  } else {
-    var id = req.params.id;
-  };
-  
-  console.log("ID for delete", id)
-
-  // Get the customer record from MySQL
-  var sql = 'SELECT * FROM customer WHERE id = ' + mysql.escape(id);
-  console.log("SQL for edit", sql)
-
-  con.query(sql, (err, rows, fields) => {
-    if (err) {
-      console.log(err);
-      res.status(500).send("Error getting customer record");
-    }
-    // Display the customer record in HTML
-    res.render("deleteCustomer.ejs", { rows, dictionary, langCode, firstName, displayMessage });
-  });
+  console.log(getDeleteCustomer(req, res));
 });
 
-
+// App Post functions
 app.post('/', (req, res) => {
-  // Get the form data from the request
-  const formData = req.body;
-  const screenId = req.body.screenId;
-
-  // Display the form data on the console
-  console.log(formData);
-  console.log(screenId);
-
-    // Return an error code if company ID not entered or invalid
-    // Redirect to the Login screen if Company ID valid
-    const companyId = req.body.companyId;
-    if (companyId == "") {
-      // Return error if company ID field is empty
-      res.cookie('errorCode', "0101", { expires: new Date(Date.now() + 5000), secure: false,
-      httpOnly: false });
-      res.cookie('compId', companyId, { expires: new Date(Date.now() + 5000), secure: false,
-        httpOnly: false });
-      res.render("index.ejs");
-    } else {
-      // con.connect(function(err) {
-      //    if (err) throw err;
-          var sql = 'SELECT slug FROM company WHERE slug = ' + mysql.escape(companyId);
-          console.log(sql);
-          con.query(sql, function (err, result) {
-            if (err) throw err;
-            console.log(result);
-            if (typeof result[0] == 'undefined') {
-              // Return error and company ID field if record not found on Company Table
-              res.cookie('errorCode', "0102", { expires: new Date(Date.now() + 5000), secure: false,
-              httpOnly: false });
-              res.cookie('compId', companyId, { expires: new Date(Date.now() + 5000), secure: false,
-                httpOnly: false });
-              res.render("index.ejs");
-            }
-            else if (companyId == result[0].slug) {
-              // Redirect to the login page - company ID is valid
-              res.cookie('errorCode', "0201", { expires: new Date(Date.now() + 5000), secure: false,
-              httpOnly: false });
-              displayMessage = myObj.en.msg0201;
-              // console.log ("display Message", displayMessage);
-              res.render("login.ejs", {
-                usernameInput, displayMessage
-              });
-            }
-          });
-    };
+  console.log(postIndex(req, res));
 });
 
 app.post('/login', (req, res) => {
-  const username = req.body.username;
-  const password = req.body.pswd;
-
-  if (username == ""||password == "") {
-    // Return error if username or password field is empty
-    usernameInput = username;
-    displayMessage = myObj.en.msg0202;
-    // console.log ("display Message", displayMessage);
-    res.render("login.ejs", {
-      usernameInput, displayMessage
-    });
-  } else {
-    // Check if username & password are valid
-    var sql = 'SELECT * FROM user WHERE username = ' + mysql.escape(username) + ' AND password = ' + mysql.escape(password);
-    console.log(sql);
-    con.query(sql, async function (err, result) {
-      if (err) throw err;
-      console.log(result);
-      var loginInvalid = false;
-      // console.log(username);
-      usernameInput = username;
-      if (typeof result[0] == 'undefined') {
-        // Return error and username/password fields if record not found on User Table
-          loginInvalid = true;
-          displayMessage = myObj.en.msg0203;
-          // console.log ("display Message", displayMessage);
-          res.render("login.ejs", {
-            usernameInput, displayMessage
-          });
-        } else {
-          // User has logged in successfully. Display the Admin landing page
-          // Set the language ID based on user's preferred language
-          const langId = result[0].language_id;
-          firstName = result[0].first_name;
-          console.log("language ID", langId);
-          var sql = 'SELECT code FROM language WHERE id = ' + mysql.escape(langId);
-          console.log(sql);
-        
-          con.query(sql, function (err, result) {
-            if (err) throw err;
-            langCode = result[0].code;
-            console.log(langCode);
-            const langObj = new Function('obj', `return obj.${langCode}`);
-            dictionary = langObj(myObj);
-            // console.log(dictionary);
-          });
-          displayMessage = dictionary.msg0301;
-          // let displayList = await customerList(res, dictionary, langCode, firstName, displayMessage);
-          console.log("current page", currentPage);
-          console.log("next page", nextPage);
-          const queryString = 'SELECT * FROM customer LIMIT ? OFFSET ?';
-          con.query(queryString, [itemsPerPage, offset], (err, rows) => {
-            if (err) throw err;
-
-          // Count total customers to calculate number of pages
-          con.query('SELECT COUNT(*) AS total FROM customer', (err, result) => {
-            if (err) throw err;
-            const totalCustomers = result[0].total;
-            var totalPages = Math.ceil(totalCustomers / itemsPerPage);
-           res.render("adminConsole.ejs", {
-             rows, dictionary, langCode, firstName, displayMessage, currentPage, nextPage, totalPages
-           });
-          });
-        });
-      };
-      });       
-  }; 
-
+  console.log(postLogin(req, res));
 });
 
 app.post('/adminConsole', (req, res) => {
-  // customer list screen
-  displayMessage = dictionary.msg0401;
-  res.render("addCustomer.ejs", {
-    dictionary, langCode, firstName, displayMessage, newName, newSuburb
-  });
+  console.log(postAdminConsole(req, res));
 });
 
 app.post('/addcustomer', async (req, res) => {
-  // add customer screen
-  const firstname = req.body.firstname;
-  const suburb = req.body.suburb;
-  if (firstname == ""||suburb == "") {
-    // Return error if first name or suburb field is empty
-    displayMessage = dictionary.msg0402;
-    newName = firstname;
-    newSuburb = suburb;
-    res.render("addCustomer.ejs", {
-      dictionary, langCode, firstName, displayMessage, newName, newSuburb
-    });
-  } else { 
-    // add customer to database
-    var sql = 'INSERT INTO customer (first_name, suburb) VALUES (' + mysql.escape(firstname) + ', ' + mysql.escape(suburb) + ')';
-    console.log(sql);
-    con.query(sql, function (err, result) {
-      if (err) throw err;
-      con.commit();
-    });
-    
-    displayMessage = dictionary.msg0302;
-    //const displayList = await customerList(res, dictionary, langCode, firstName, displayMessage);
-    const queryString = 'SELECT * FROM customer LIMIT ? OFFSET ?';
-    con.query(queryString, [itemsPerPage, offset], (err, rows) => {
-      if (err) throw err;
-      // Count total customers to calculate number of pages
-      con.query('SELECT COUNT(*) AS total FROM customer', (err, result) => {
-        if (err) throw err;
-          const totalCustomers = result[0].total;
-          var totalPages = Math.ceil(totalCustomers / itemsPerPage);
-          res.render("adminConsole.ejs", {
-             rows, dictionary, langCode, firstName, displayMessage, currentPage, nextPage, totalPages
-          });
-      });
-    });
-  };
+  console.log(postAddCustomer(req, res));
 });
 
 app.post('/editCustomer', (req, res) => {
-  // customer edit screen
-  // update customer record in database
-  const firstname = req.body.firstname;
-  const suburb = req.body.suburb;
-  const recordId = req.body.recordId;
-  var sql = 'UPDATE customer SET first_name = ' + mysql.escape(firstname) + ', suburb = ' + mysql.escape(suburb) + ' WHERE id = '  + mysql.escape(recordId) + ';' ;
-  console.log(sql);
-  con.query(sql, function (err, result) {
-    if (err) throw err;
-  //con.end();
-  });
-
-  displayMessage = dictionary.msg0303;
-  const queryString = 'SELECT * FROM customer LIMIT ? OFFSET ?';
-  con.query(queryString, [itemsPerPage, offset], (err, rows) => {
-    if (err) throw err;
-    // Count total customers to calculate number of pages
-    con.query('SELECT COUNT(*) AS total FROM customer', (err, result) => {
-      if (err) throw err;
-        const totalCustomers = result[0].total;
-        var totalPages = Math.ceil(totalCustomers / itemsPerPage);
-        res.render("adminConsole.ejs", {
-           rows, dictionary, langCode, firstName, displayMessage, currentPage, nextPage, totalPages
-        });
-    });
-  });
+  console.log(postEditCustomer(req, res));
 });
 
 app.post('/deleteCustomer', (req, res) => {
-  const recordId = req.body.recordId;
-  var sql = 'DELETE FROM customer WHERE id = '  + mysql.escape(recordId) + ';' ;
-  console.log(sql);
-  con.query(sql, function (err, result) {
-    if (err) throw err;
-  //con.end();
-  });
-
-  displayMessage = dictionary.msg0304;
-  const queryString = 'SELECT * FROM customer LIMIT ? OFFSET ?';
-  con.query(queryString, [itemsPerPage, offset], (err, rows) => {
-    if (err) throw err;
-    // Count total customers to calculate number of pages
-    con.query('SELECT COUNT(*) AS total FROM customer', (err, result) => {
-      if (err) throw err;
-        const totalCustomers = result[0].total;
-        var totalPages = Math.ceil(totalCustomers / itemsPerPage);
-        res.render("adminConsole.ejs", {
-           rows, dictionary, langCode, firstName, displayMessage, currentPage, nextPage, totalPages
-        });
-    });
-  });
+  console.log(postDeleteCustomer(req, res));
 });
 
 app.post('/searchCustomer', (req, res) => {
-  // customer list search results
-  var searchText = req.body.searchText;
-  console.log("Search Text", searchText);
-  // If search is blank return to full customer list
-  if (searchText == "") {
-    var currentPage = 1;
-    var nextPage = currentPage + 1;
-    const queryString = 'SELECT * FROM customer LIMIT ? OFFSET ?';
-    con.query(queryString, [itemsPerPage, offset], (err, rows) => {
-      if (err) throw err;
-      // Count total customers to calculate number of pages
-      con.query('SELECT COUNT(*) AS total FROM customer', (err, result) => {
-        if (err) throw err;
-          const totalCustomers = result[0].total;
-          var totalPages = Math.ceil(totalCustomers / itemsPerPage);
-          res.render("adminConsole.ejs", {
-             rows, dictionary, langCode, firstName, displayMessage, currentPage, nextPage, totalPages
-          });
-      });
-    });
-  } else {
-    // example of filtering a javascript object
-    // let filteredCustomers = rows.filter((customer) => {
-    //    return customer.first_name.toLowerCase().includes(searchText.toLowerCase()) || customer.suburb.toLowerCase().includes(searchText.toLowerCase());
-    //  });
-    // console.log("Filtered list", filteredCustomers);
-    //  rows = filteredCustomers;
-    var fnSearch = "%" + searchText + "%";
-    var suSearch = "%" + searchText + "%";
-    console.log("fnsearch", fnSearch);
-    console.log("susearch", suSearch);
-    displayMessage = dictionary.msg0305;
-    // Display partial customer list based on search criteria with navigation menu
-    var currentPage = 1;
-    var nextPage = currentPage + 1;
-    const queryString = 'SELECT * FROM customer where first_name like ? or suburb like ? LIMIT ? OFFSET ?';
-    con.query(queryString, [fnSearch, suSearch, itemsPerPage, offset], (err, rows) => {
-    if (err) throw err;
-
-    // Count total customers to calculate number of pages
-    var sql = 'SELECT COUNT(*) AS total FROM customer  where first_name like ? or suburb like ?';
-    con.query(sql, [fnSearch, suSearch], (err, result) => {
-      if (err) throw err;
-      const totalCustomers = result[0].total;
-      var totalPages = Math.ceil(totalCustomers / itemsPerPage);
-      res.render("custSearch.ejs", {
-       rows, dictionary, langCode, firstName, displayMessage, currentPage, nextPage, totalPages, searchText
-      });
-    });
-  });
-  }
+  console.log(postSearchCustomer(req, res));
 });
 
 const port = 3000;
