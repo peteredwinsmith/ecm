@@ -168,8 +168,7 @@ body {
   padding: 0.625rem; /* 10px */
   }
   
-  
-.regularbutton {
+BUTTON.regularbutton {
   width: 6rem;
   height: 2.6rem;
   outline-width: 0px;
@@ -189,11 +188,11 @@ body {
   justify-content: center;
 }
   
-.regularbutton a:hover {
+BUTTON.regularbutton:hover {
   background-color: #1e40af;
 }
 
-.createbutton {
+BUTTON.createbutton {
   width: 6rem;
   height: 2.6rem;
   outline-width: 0px;
@@ -213,7 +212,7 @@ body {
   justify-content: center;
 }
   
-.createbutton a:hover {
+BUTTON.regularbutton:hover {
   background-color: #9b2c2c;
 }
   
