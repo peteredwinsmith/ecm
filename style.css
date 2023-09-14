@@ -118,6 +118,13 @@ body {
   background-color: black;
 }
 
+/* Highlight active page on navigation bar with black background */
+.activepage {
+  font-weight: 700;
+  color: #FFFFFF;
+  background-color: black;
+}
+
 /* Responsive layout */
 @media screen and (max-width: 600px) {
   .listnav {
@@ -189,7 +196,7 @@ BUTTON.regularbutton {
 }
   
 BUTTON.regularbutton:hover {
-  background-color: #1e40af;
+  background-color: #1D4ED8;
 }
 
 BUTTON.createbutton {
@@ -212,7 +219,7 @@ BUTTON.createbutton {
   justify-content: center;
 }
   
-BUTTON.regularbutton:hover {
+BUTTON.createbutton:hover {
   background-color: #9b2c2c;
 }
   
