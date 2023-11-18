@@ -1,6 +1,3 @@
-import dotenv from 'dotenv'
-dotenv.config();
-
 export default function initApp() {
   const hamburgerBtn = document.getElementById('hamburger-button')
   const mobileMenu = document.getElementById('mobile-menu')
